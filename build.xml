@@ -1,11 +1,17 @@
 <project name="IA_aide_decision" default="compile" basedir=".">
     <property name="projet.sources.dir" value="src"/>
     <property name="projet.bin.dir" value="build"/>
-    <!--<property name="projet.lib.dir" value="lib"/> -->
+    <property name="projet.lib.dir" value="lib"/>
     <path id="projet.classpath">
         <pathelement location="${projet.bin.dir}"/>
+        <fileset dir="lib">
+            <include name="**/*.jar"/>
+            <include name="**/*.zip"/>
+        </fileset>
     </path>
     <target name="compile" description="Compilation des classes">
+        <delete dir="build" />
+        <mkdir dir="${projet.bin.dir}"/>
         <javac srcdir="${projet.sources.dir}" destdir="${projet.bin.dir}" debug="on" optimize="off" deprecation="on" includeantruntime="false">
             <classpath refid="projet.classpath"/>
         </javac>
@@ -13,14 +19,12 @@
     <target name="init">
         <mkdir dir="${projet.bin.dir}"/>
     </target>
-    <!-- <target name="run" description="execution" depends="compile">
-        <java classname="corewar.Main" fork="false">
-            <arg value="progs/custom.red"/>
-            <arg value="progs/test_paper.red"/>
+    <target name="test" description="execution" depends="compile">
+        <java classname="test.Test" fork="false">
             <classpath refid="projet.classpath"/>
         </java>
     </target>
-    <target name="runWindow" description="execution" depends="compile">
+    <!--<target name="runWindow" description="execution" depends="compile">
         <java classname="interfaces.CorewarWindow" fork="false">
             <arg value="progs/custom.red"/>
             <arg value="progs/test_paper.red"/>
