@@ -3,10 +3,9 @@ package representation;
 import java.util.*;
 
 public class Variable {
-	
     protected String name;
     protected Set<Object> domain;
-    
+
     public Variable(String name, Set<Object> domain) {
         this.name = name;
         this.domain = domain;
