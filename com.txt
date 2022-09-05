@@ -3,3 +3,5 @@ javac -d ../build -cp .:../lib/tests.jar representation/*.java test/Test.java
 
 java -cp ../build:../lib/tests.jar test.Test
 
+git rebase main me
+git merge me
