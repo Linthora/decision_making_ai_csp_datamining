@@ -7,6 +7,17 @@ import representationtests.UnaryConstraintTests;
 import representationtests.DifferenceConstraintTests;
 import representationtests.ImplicationTests;
 
+// TP2 imports
+import planningtests.AStarPlannerTests;
+import planningtests.BFSPlannerTests;
+import planningtests.BasicActionTests;
+import planningtests.BasicGoalTests;
+import planningtests.DFSPlannerTests;
+import planningtests.DijkstraPlannerTests;
+
+
+
+
 public class Test {
 
     public static void main(String[] args) {
@@ -37,5 +48,16 @@ public class Test {
         ok = ok && UnaryConstraintTests.testIsSatisfiedBy();
         // System.out.println("OK");
         System . out . println ( ok ? " All tests passed for Constraints OK " : " At least one test Constraints KO" );
+
+        //TEST TP2 //ORGANISER !!!!!!!!!!!!
+
+        ok = ok && BasicActionTests.testIsApplicable();
+        System.out.println("testIsApplicable !!");
+        ok = ok && BasicActionTests.testSuccessor();
+        System.out.println("testSuccessor");
+        ok = ok && BasicActionTests.testGetCost();
+        System.out.println("testCost !!");
+        ok = ok && BasicGoalTests.testIsSatisfiedBy();
+        System.out.println(ok ? "test passed for Basicsss": "no good soup");
     }
 }
