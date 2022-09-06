@@ -23,10 +23,8 @@ public class Variable {
     public boolean equals(Object o) {
         if(o == this)
             return true;
-        
         if(!(o instanceof Variable))
             return false;
-        
         Variable var = (Variable) o;
         return this.name.equals(var.name);
     }

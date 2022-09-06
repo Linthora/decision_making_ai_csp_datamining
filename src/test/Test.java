@@ -59,5 +59,10 @@ public class Test {
         System.out.println("testCost !!");
         ok = ok && BasicGoalTests.testIsSatisfiedBy();
         System.out.println(ok ? "test passed for Basicsss": "no good soup");
+        //DFS
+        ok = ok && DFSPlannerTests.testPlan();
+        //BFS
+        ok = ok && BFSPlannerTests . testPlan ();
+        System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP");
     }
 }
