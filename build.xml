@@ -21,6 +21,7 @@
     </target>
     <target name="test" description="execution" depends="compile">
         <java classname="test.Test" fork="false">
+          <arg value="-Xdiags:verbose"/>
             <classpath refid="projet.classpath"/>
         </java>
     </target>

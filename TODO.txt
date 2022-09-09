@@ -1,0 +1,4 @@
+opti:
+  -PriorityQueue for distances (et value aussi peut-être) (Dijkstra && AStart)
+  -HashSet -> maybe to TreeSet (probably not necessary as the teacher said.
+  -Set closed ( & opens maybe) -> Object State(Map) to String ?

@@ -62,7 +62,12 @@ public class Test {
         //DFS
         ok = ok && DFSPlannerTests.testPlan();
         //BFS
-        ok = ok && BFSPlannerTests . testPlan ();
+        ok = ok && BFSPlannerTests.testPlan();
+        //Dijkstra
+        ok = ok && DijkstraPlannerTests.testPlan();
+        //AStar
+        ok = ok && AStarPlannerTests.testPlan();
+        // voir si propre planner
         System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP");
     }
 }

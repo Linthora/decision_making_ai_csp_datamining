@@ -27,7 +27,7 @@ public class BFSPlanner implements Planner {
         closed.add(this.initialState);
         LinkedList<Map<Variable, Object>> open = new LinkedList<>();
         open.add(this.initialState);
-        father.remove(this.initialState);
+        father.put(this.initialState, null);
 
         if(this.goal.isSatisfiedBy(this.initialState))
             return new LinkedList<>();
@@ -38,7 +38,7 @@ public class BFSPlanner implements Planner {
             for(Action a : this.actions) {
                 if(a.isApplicable(instantiation)) {
                     Map<Variable, Object> next = a.successor(instantiation);
-                    if(!(closed.contains(next) && open.contains(next))) {
+                    if(!(closed.contains(next)) && !(open.contains(next))) {
                         father.put(next, instantiation);
                         plan.put(next, a);
                         if(this.goal.isSatisfiedBy(next))
@@ -53,23 +53,15 @@ public class BFSPlanner implements Planner {
     }
 
     private List<Action> getBFSPlan(Map<Map<Variable, Object>,Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan, Map<Variable, Object> goal) {
-        Stack<Action> bfs_plan = new Stack<>();
-        while(goal != null) {
-            bfs_plan.push(plan.get(goal));
+        LinkedList<Action> bfs_plan = new LinkedList<>();
+        while(goal != null && goal!=this.initialState) {
+            bfs_plan.add(plan.get(goal));
             goal = father.get(goal);
         }
 
+        Collections.reverse(bfs_plan);
         return bfs_plan;
     }
-
-
-
-
-
-
-
-
-
 
     public Map<Variable, Object> getInitialState() {
         return this.initialState;
