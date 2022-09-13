@@ -10,12 +10,14 @@ public class AStarPlanner implements Planner {
     protected Set<Action> actions;
     protected Goal goal;
     protected Heuristic heuristic;
+    protected int exploredNodes;
 
     public AStarPlanner(Map<Variable, Object> initialState, Set<Action> actions, Goal goal, Heuristic heuristic) {
         this.initialState = initialState;
         this.actions = actions;
         this.goal = goal;
         this.heuristic = heuristic;
+        this.exploredNodes = 0;
     }
         public List<Action> plan() {
         Map<Map<Variable, Object>, Action> plan = new HashMap<>();
@@ -34,6 +36,7 @@ public class AStarPlanner implements Planner {
         value.put(this.initialState, this.heuristic.estimate(this.initialState));
 
         while(!open.isEmpty()) {
+            this.exploredNodes++;
             Map<Variable, Object> instantiation = argmin(distance, open);
             if(this.goal.isSatisfiedBy(instantiation))
                 return getBFSPlan(father, plan, instantiation);
@@ -77,6 +80,7 @@ public class AStarPlanner implements Planner {
 
     }
 
+    // Should factorize this code
     private List<Action> getBFSPlan(Map<Map<Variable, Object>,Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan, Map<Variable, Object> goal) {
         LinkedList<Action> bfs_plan = new LinkedList<>();
         while(goal != null && goal!=this.initialState) {
@@ -95,9 +99,15 @@ public class AStarPlanner implements Planner {
     public Set<Action> getActions() {
         return this.actions;
     }
+
+    public int getExploredNode() {
+        return this.exploredNodes;
+    }
+
     public Goal getGoal() {
         return this.goal;
     }
+
     public Heuristic getHeuristic() {
         return this.heuristic;
     }

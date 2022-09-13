@@ -14,10 +14,12 @@ public class BasicAction implements Action {
         this.cost = cost;
     }
 
+    @Override
     public boolean isApplicable(Map<Variable, Object> state) {
         return state.entrySet().containsAll(this.precondition.entrySet());
     }
 
+    @Override
     public Map<Variable, Object> successor(Map<Variable, Object> state) {
         if(isApplicable(state)) {
             Map<Variable, Object> res = new HashMap<>(state);
@@ -28,6 +30,7 @@ public class BasicAction implements Action {
         return state;
     }
 
+    @Override
     public int getCost() {
         return this.cost;
     }
