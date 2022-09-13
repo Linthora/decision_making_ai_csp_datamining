@@ -20,31 +20,52 @@ public class AStarPlanner implements Planner {
         this.exploredNodes = 0;
     }
         public List<Action> plan() {
-        Map<Map<Variable, Object>, Action> plan = new HashMap<>();
-        Map<Map<Variable, Object>, Map<Variable, Object>> father = new HashMap<>();
-        Map<Map<Variable, Object>, Float> distance = new HashMap<>();
-        Map<Map<Variable, Object>, Float> value = new HashMap<>();
-
-        return searching(father, plan, distance, value);
+        return searching();
     }
 
-    private List<Action> searching(Map<Map<Variable, Object>, Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan, Map<Map<Variable, Object>, Float> distance, Map<Map<Variable, Object>, Float> value) {
+    private List<Action> searching() {
+        Map<Map<Variable, Object>, Action> plan = new HashMap<>();
+        Map<Map<Variable, Object>, Map<Variable, Object>> father = new HashMap<>();
+        Map<Map<Variable, Object>, Float> value = new HashMap<>();
+
+
         Set<Map<Variable, Object>> open = new HashSet<>();
-        distance.put(this.initialState, (float) 0);
         open.add(this.initialState);
         father.put(this.initialState, null);
         value.put(this.initialState, this.heuristic.estimate(this.initialState));
 
+        DistanceState first = new DistanceState(this.initialState, (float) 0);
+        Map<Map<Variable, Object>, DistanceState> distanceMap = new HashMap<>(); // for fast access
+        distanceMap.put(this.initialState, first);
+        PriorityQueue<DistanceState> distance = new PriorityQueue<>();
+        distance.add(first);
+
         while(!open.isEmpty()) {
             this.exploredNodes++;
-            Map<Variable, Object> instantiation = argmin(distance, open);
+            // Map<Variable, Object> instantiation = argmin(distance, open);
+            Map<Variable, Object> instantiation = distance.poll().getState();
             if(this.goal.isSatisfiedBy(instantiation))
                 return getBFSPlan(father, plan, instantiation);
             open.remove(instantiation);
             for(Action a: this.actions) {
                 if(a.isApplicable(instantiation)) {
                     Map<Variable, Object> next = a.successor(instantiation);
-                    if(!distance.keySet().contains(next))
+
+                    if(distanceMap.keySet().contains(next) && (distanceMap.get(next).getDist() > distanceMap.get(instantiation).getDist() + a.getCost())) {
+                        distance.remove(distanceMap.get(next));
+                        distanceMap.remove(next);
+                    }
+                    if(!distanceMap.keySet().contains(next)) {
+                        DistanceState newNext = new DistanceState(next, (distanceMap.get(instantiation).getDist() + a.getCost() ));
+                        distanceMap.put(next, newNext);
+                        distance.add(newNext);
+                        father.put(next, instantiation);
+                        value.put(next, distanceMap.get(next).getDist() + this.heuristic.estimate(next));
+                        plan.put(next, a);
+                        open.add(next);
+                    }
+
+                    /*if(!distance.keySet().contains(next))
                         distance.put(next, Float.MAX_VALUE);
                     if(distance.get(next) > distance.get(instantiation) + a.getCost()) {
                         distance.put(next, distance.get(instantiation) + a.getCost());
@@ -52,7 +73,7 @@ public class AStarPlanner implements Planner {
                         father.put(next, instantiation);
                         plan.put(next, a);
                         open.add(next);
-                    }
+                        }*/
                 }
             }
         }
@@ -60,27 +81,7 @@ public class AStarPlanner implements Planner {
         return null;
     }
 
-    private Map<Variable, Object> argmin(Map<Map<Variable, Object>, Float> map, Set<Map<Variable, Object>> okKey) {
-        // little challenge to exercice on generics
-        Map<Variable, Object> res = null;
-        Float min = null;
-        for(Map<Variable, Object> key: okKey) {
-            if(res == null) {
-                res = key;
-                min = map.get(key);
-            }
-            else {
-                if(min.compareTo(map.get(key)) > 0) {
-                    res = key;
-                    min = map.get(key);
-                }
-            }
-        }
-        return res;
-
-    }
-
-    // Should factorize this code
+    // Should factorize this code with BFS ?ask teacher
     private List<Action> getBFSPlan(Map<Map<Variable, Object>,Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan, Map<Variable, Object> goal) {
         LinkedList<Action> bfs_plan = new LinkedList<>();
         while(goal != null && goal!=this.initialState) {
