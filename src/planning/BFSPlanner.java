@@ -9,11 +9,13 @@ public class BFSPlanner implements Planner {
     protected Map<Variable, Object> initialState;
     protected Set<Action> actions;
     protected Goal goal;
+    protected int exploredNodes;
 
     public BFSPlanner(Map<Variable,Object> initialState, Set<Action> actions, Goal goal) {
         this.initialState = initialState;
         this.actions = actions;
         this.goal = goal;
+        this.exploredNodes = 1;
     }
 
     public List<Action> plan() {
@@ -33,6 +35,7 @@ public class BFSPlanner implements Planner {
             return new LinkedList<>();
 
         while(!open.isEmpty()) {
+            this.exploredNodes++;
             Map<Variable, Object> instantiation = open.remove();
             closed.add(instantiation);
             for(Action a : this.actions) {
@@ -70,6 +73,11 @@ public class BFSPlanner implements Planner {
     public Set<Action> getActions() {
         return actions;
     }
+
+    public int getExploredNode() {
+        return this.exploredNodes;
+    }
+
     public Goal getGoal() {
         return goal;
     }
