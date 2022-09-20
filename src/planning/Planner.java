@@ -9,4 +9,5 @@ public interface Planner {
     public Map<Variable, Object> getInitialState();
     public Set<Action> getActions();
     public Goal getGoal();
+    public int getExploredNode();
 }

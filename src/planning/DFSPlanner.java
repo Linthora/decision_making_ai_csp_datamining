@@ -18,11 +18,11 @@ public class DFSPlanner implements Planner {
         this.exploredNodes = 0;
     }
 
+    @Override
     public List<Action> plan() {
         Stack<Action> plan = new Stack<Action>();
         Set<Map<Variable, Object>> closed = new HashSet<Map<Variable, Object>>();
         closed.add(initialState);
-        //        List<Action> res = searching(this.initialState, plan, closed);
         return searching(this.initialState, plan, closed);
     }
 
@@ -49,18 +49,22 @@ public class DFSPlanner implements Planner {
     }
 
 
+    @Override
     public Map<Variable, Object> getInitialState() {
         return this.initialState;
     }
 
+    @Override
     public Set<Action> getActions() {
         return actions;
     }
 
+    @Override
     public int getExploredNode() {
         return this.exploredNodes;
     }
 
+    @Override
     public Goal getGoal() {
         return goal;
     }

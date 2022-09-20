@@ -18,11 +18,8 @@ public class DijkstraPlanner implements Planner {
         this.exploredNodes = 0;
     }
 
+    @Override
     public List<Action> plan() {
-        return searching();
-    }
-
-    private List<Action> searching() {
         Map<Map<Variable, Object>, Action> plan = new HashMap<>();
         Map<Map<Variable, Object>, Map<Variable, Object>> father = new HashMap<>();
         Set<Map<Variable, Object>> goals = new HashSet<>();
@@ -31,14 +28,13 @@ public class DijkstraPlanner implements Planner {
         father.put(this.initialState, null);
 
         DistanceState first = new DistanceState(this.initialState, (float) 0);
-        Map<Map<Variable, Object>, DistanceState> distanceMap = new HashMap<>(); // for fast access
+        Map<Map<Variable, Object>, DistanceState> distanceMap = new HashMap<>();
         distanceMap.put(this.initialState, first);
         PriorityQueue<DistanceState> distance = new PriorityQueue<>();
         distance.add(first);
 
         while(!open.isEmpty()) {
             this.exploredNodes++;
-            //Map<Variable, Object> instantiation = argmin(distance, open);
             Map<Variable, Object> instantiation = distance.poll().getState();
             //remove from priority queue but map? no because otherwise we would be able to circle in some states
             open.remove(instantiation);
@@ -60,21 +56,11 @@ public class DijkstraPlanner implements Planner {
                         plan.put(next, a);
                         open.add(next);
                     }
-
-                    /*if(!distance.keySet().contains(next))
-                        distance.put(next, Float.MAX_VALUE);
-                    if(distance.get(next) > (distance.get(instantiation) +a.getCost() )) {
-                        distance.put(next, distance.get(instantiation) + a.getCost());
-                        father.put(next, instantiation);
-                        plan.put(next, a);
-                        open.add(next);*/
                 }
             }
         }
         if(goals.isEmpty())
             return null;
-        // PRIORITY QUEUE FOR distance !!!!!
-        // and treeset for all the Sets THEN see for alternative of map (defining toString)
         return getDijkstraPlan(father, plan, goals, distanceMap);
     }
 
@@ -85,8 +71,7 @@ public class DijkstraPlanner implements Planner {
             if(res == null) {
                 res = key;
                 min = map.get(key).getDist();
-            }
-            else {
+            } else {
                 if(min.compareTo(map.get(key).getDist()) > 0) {
                     res = key;
                     min = map.get(key).getDist();
@@ -94,11 +79,9 @@ public class DijkstraPlanner implements Planner {
             }
         }
         return res;
-
-        }
+    }
 
     private List<Action> getDijkstraPlan(Map<Map<Variable, Object>,Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan, Set<Map<Variable, Object>> goals, Map<Map<Variable, Object>, DistanceState> distance) {
-        //System.out.println("slowing here?");
         LinkedList<Action> dijkstra_plan = new LinkedList<>();
         Map<Variable, Object> goal = argmin(distance, goals);
         while(goal != null && goal!=this.initialState) {
@@ -110,18 +93,22 @@ public class DijkstraPlanner implements Planner {
         return dijkstra_plan;
     }
 
+    @Override
     public Map<Variable, Object> getInitialState() {
         return this.initialState;
     }
 
+    @Override
     public Set<Action> getActions() {
         return actions;
     }
 
+    @Override
     public int getExploredNode() {
         return this.exploredNodes;
     }
 
+    @Override
     public Goal getGoal() {
         return goal;
     }

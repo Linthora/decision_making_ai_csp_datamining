@@ -18,13 +18,11 @@ public class BFSPlanner implements Planner {
         this.exploredNodes = 1;
     }
 
+    @Override
     public List<Action> plan() {
         Map<Map<Variable, Object>, Action> plan = new HashMap<>();
         Map<Map<Variable, Object>, Map<Variable, Object>> father = new HashMap<>();
-        return searching(father, plan);
-    }
 
-    private List<Action> searching(Map<Map<Variable, Object>, Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan) {
         Set<Map<Variable, Object>> closed = new HashSet<>();
         closed.add(this.initialState);
         LinkedList<Map<Variable, Object>> open = new LinkedList<>();
@@ -57,6 +55,7 @@ public class BFSPlanner implements Planner {
 
     private List<Action> getBFSPlan(Map<Map<Variable, Object>,Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan, Map<Variable, Object> goal) {
         LinkedList<Action> bfs_plan = new LinkedList<>();
+
         while(goal != null && goal!=this.initialState) {
             bfs_plan.add(plan.get(goal));
             goal = father.get(goal);
@@ -66,18 +65,22 @@ public class BFSPlanner implements Planner {
         return bfs_plan;
     }
 
+    @Override
     public Map<Variable, Object> getInitialState() {
         return this.initialState;
     }
 
+    @Override
     public Set<Action> getActions() {
         return actions;
     }
 
+    @Override
     public int getExploredNode() {
         return this.exploredNodes;
     }
 
+    @Override
     public Goal getGoal() {
         return goal;
     }
