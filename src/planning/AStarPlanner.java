@@ -19,61 +19,48 @@ public class AStarPlanner implements Planner {
         this.heuristic = heuristic;
         this.exploredNodes = 0;
     }
-        public List<Action> plan() {
-        return searching();
-    }
 
-    private List<Action> searching() {
+    @Override
+    public List<Action> plan() {
         Map<Map<Variable, Object>, Action> plan = new HashMap<>();
+
         Map<Map<Variable, Object>, Map<Variable, Object>> father = new HashMap<>();
-        Map<Map<Variable, Object>, Float> value = new HashMap<>();
-
-
-        Set<Map<Variable, Object>> open = new HashSet<>();
-        open.add(this.initialState);
         father.put(this.initialState, null);
-        value.put(this.initialState, this.heuristic.estimate(this.initialState));
 
-        DistanceState first = new DistanceState(this.initialState, (float) 0);
-        Map<Map<Variable, Object>, DistanceState> distanceMap = new HashMap<>(); // for fast access
-        distanceMap.put(this.initialState, first);
-        PriorityQueue<DistanceState> distance = new PriorityQueue<>();
-        distance.add(first);
+        DistanceState first = new DistanceState(this.initialState, (float) this.heuristic.estimate(this.initialState));
+        Map<Map<Variable, Object>, DistanceState> valueMap = new HashMap<>();
+        PriorityQueue<DistanceState> value = new PriorityQueue<>();
+        valueMap.put(this.initialState, first);
+        value.add(first);
 
-        while(!open.isEmpty()) {
+        Map<Map<Variable, Object>, Float> distanceMap = new HashMap<>();
+        distanceMap.put(this.initialState, (float) 0);
+
+        while( value.size() > 0 ) {
             this.exploredNodes++;
-            // Map<Variable, Object> instantiation = argmin(distance, open);
-            Map<Variable, Object> instantiation = distance.poll().getState();
+            Map<Variable, Object> instantiation = value.poll().getState();
+            valueMap.remove(instantiation);
             if(this.goal.isSatisfiedBy(instantiation))
                 return getBFSPlan(father, plan, instantiation);
-            open.remove(instantiation);
+
             for(Action a: this.actions) {
                 if(a.isApplicable(instantiation)) {
                     Map<Variable, Object> next = a.successor(instantiation);
 
-                    if(distanceMap.keySet().contains(next) && (distanceMap.get(next).getDist() > distanceMap.get(instantiation).getDist() + a.getCost())) {
-                        distance.remove(distanceMap.get(next));
+
+                    if(distanceMap.keySet().contains(next) && (distanceMap.get(next) > distanceMap.get(instantiation) + a.getCost())) {
+                        value.remove(valueMap.get(next));
+                        valueMap.remove(next);
                         distanceMap.remove(next);
                     }
                     if(!distanceMap.keySet().contains(next)) {
-                        DistanceState newNext = new DistanceState(next, (distanceMap.get(instantiation).getDist() + a.getCost() ));
-                        distanceMap.put(next, newNext);
-                        distance.add(newNext);
+                        distanceMap.put(next, distanceMap.get(instantiation) + a.getCost());
+                        DistanceState newNext = new DistanceState(next, distanceMap.get(next) + this.heuristic.estimate(next));
+                        valueMap.put(next, newNext);
+                        value.add(newNext);
                         father.put(next, instantiation);
-                        value.put(next, distanceMap.get(next).getDist() + this.heuristic.estimate(next));
                         plan.put(next, a);
-                        open.add(next);
                     }
-
-                    /*if(!distance.keySet().contains(next))
-                        distance.put(next, Float.MAX_VALUE);
-                    if(distance.get(next) > distance.get(instantiation) + a.getCost()) {
-                        distance.put(next, distance.get(instantiation) + a.getCost());
-                        value.put(next, distance.get(next) + this.heuristic.estimate(next));
-                        father.put(next, instantiation);
-                        plan.put(next, a);
-                        open.add(next);
-                        }*/
                 }
             }
         }
@@ -93,18 +80,22 @@ public class AStarPlanner implements Planner {
         return bfs_plan;
     }
 
+    @Override
     public Map<Variable, Object> getInitialState() {
         return this.initialState;
     }
 
+    @Override
     public Set<Action> getActions() {
         return this.actions;
     }
 
+    @Override
     public int getExploredNode() {
         return this.exploredNodes;
     }
 
+    @Override
     public Goal getGoal() {
         return this.goal;
     }
