@@ -23,7 +23,6 @@ public class UnaryConstraint implements Constraint {
     public boolean isSatisfiedBy(Map<Variable, Object> instanciation) {
         if(!instanciation.keySet().contains(this.v))
             throw new IllegalArgumentException("Not all Variable in scope are present in given instanciation");
-        
-        return s.contains( instanciation.get(this.v) );
+        return this.s.contains( instanciation.get(this.v) );
     }
 }
