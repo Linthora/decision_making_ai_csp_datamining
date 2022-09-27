@@ -17,18 +17,21 @@ public class ArcConsistency {
         for(Constraint cons: this.constraints) {
             if(cons instanceof UnaryConstraint) {
                 UnaryConstraint u = (UnaryConstraint)cons;
-                if(futureDel.get(u.getVariable()) != null) {
-                    futureDel.put(u.getVariable(), u.getDomain());
+                if(futureDel.get(u.getVariable()) == null) {
+                    futureDel.put(u.getVariable(), new HashSet<>());
+                    futureDel.get(u.getVariable()).addAll(u.getDomain());
                 } else {
-                    futureDel.get(u).addAll(u.getDomain());
+                    futureDel.get(u.getVariable()).retainAll(u.getDomain());
                 }
             }
         }
 
         for(Variable var: futureDel.keySet()) {
-            vardom.get(var).removeAll(futureDel.get(vardom));
-            if(vardom.get(var).size() == 0)
+            Set<Object> tmp = vardom.get(var);
+            tmp.retainAll(futureDel.get(vardom));
+            if(tmp.size() == 0) {
                 return false;
+            }
         }
 
         return true;
