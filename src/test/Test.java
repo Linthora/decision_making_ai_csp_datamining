@@ -15,7 +15,15 @@ import planningtests.BasicGoalTests;
 import planningtests.DFSPlannerTests;
 import planningtests.DijkstraPlannerTests;
 
-
+//TP3 imports
+import csptests.AbstractSolverTests;
+import csptests.ArcConsistencyTests;
+import csptests.BacktrackSolverTests;
+import csptests.DomainSizeVariableHeuristicTests;
+import csptests.HeuristicMACSolverTests;
+import csptests.MACSolverTests;
+import csptests.NbConstraintsVariableHeuristicTests;
+import csptests.RandomValueHeuristicTests;
 
 
 public class Test {
@@ -55,6 +63,12 @@ public class Test {
         ok = ok && DijkstraPlannerTests.testPlan();
         //AStar
         ok = ok && AStarPlannerTests.testPlan();
+
+        //TEST TP3
+        ok = ok && AbstractSolverTests.testIsConsistent();
+        ok = ok && BacktrackSolverTests.testSolve();
+        ok = ok && ArcConsistencyTests.testEnforceNodeConsistency();
+
         System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");
     }
 }

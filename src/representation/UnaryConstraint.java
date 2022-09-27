@@ -12,6 +12,14 @@ public class UnaryConstraint implements Constraint {
         this.s = s;
     }
 
+    public Variable getVariable() {
+        return this.v;
+    }
+
+    public Set<Object> getDomain() {
+        return this.s;
+    }
+
     @Override
     public Set<Variable> getScope() {
         Set<Variable> scope = new HashSet<>();
