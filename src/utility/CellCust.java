@@ -1,26 +1,26 @@
 package utility;
 
+import java.util.*;
 
-//Default chosen on purpose
-class Cell <E extends Comparable<E>> {
-    protected Cell<E> previous;
-    protected Cell<E> next;
+public class CellCust <E extends Comparable<E>> {
+    protected CellCust<E> previous;
+    protected CellCust<E> next;
     protected E value;
 
-    public Cell(E value)
+    public CellCust(E value)
     {
         this.previous=null;
         this.next=null;
         this.value=value;
     }
 
-    public Cell(E value, Cell<E> previous)
+    public CellCust(E value, CellCust<E> previous)
     {
         this.previous=previous;
         this.value=value;
         this.next=null;
     }
-    public Cell(E value, Cell<E> previous, Cell<E> next)
+    public CellCust(E value, CellCust<E> previous, CellCust<E> next)
     {
         this.previous=previous;
         this.next=next;
@@ -37,31 +37,35 @@ class Cell <E extends Comparable<E>> {
         this.value=value;
     }
 
-    public Cell<E> next()
+    public CellCust<E> next()
     {
         return this.next;
     }
 
-    public Cell<E> previous()
+    public CellCust<E> previous()
     {
         return this.previous;
     }
 
-    public void setNext(Cell<E> next)
+    public void setNext(CellCust<E> next)
     {
         this.next=next;
     }
 
-    public void setPrevious(Cell<E> previous)
+    public void setPrevious(CellCust<E> previous)
     {
         this.previous=previous;
     }
 
     public void insert(E newEl) {
         if(this.value.compareTo(newEl) < 0) {
-            this.next.insert(newEl);
+            if(this.next == null) {
+                this.next = new CellCust<>(newEl, this, null);
+            } else {
+                this.next.insert(newEl);
+            }
         } else {
-            Cell<E> newNode = new Cell<>(newEl, this, this.next);
+            CellCust<E> newNode = new CellCust<>(newEl, this, this.next);
             if(this.next != null)
                 this.next.setPrevious(newNode);
             this.next = newNode;

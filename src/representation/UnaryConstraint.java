@@ -33,4 +33,5 @@ public class UnaryConstraint implements Constraint {
             throw new IllegalArgumentException("Not all Variable in scope are present in given instanciation");
         return this.s.contains( instanciation.get(this.v) );
     }
+
 }
