@@ -68,6 +68,7 @@ public class Test {
         ok = ok && AbstractSolverTests.testIsConsistent();
         ok = ok && BacktrackSolverTests.testSolve();
         ok = ok && ArcConsistencyTests.testEnforceNodeConsistency();
+        ok = ok && ArcConsistencyTests.testRevise();
 
         System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");
     }

@@ -13,24 +13,61 @@ public class ArcConsistency {
     }
 
     public boolean enforceNodeConsistency(Map<Variable, Set<Object>> vardom) {
-        Map<Variable,Set<Object>> futureDel = new HashMap<>();
-        for(Constraint cons: this.constraints) {
-            if(cons instanceof UnaryConstraint) {
-                UnaryConstraint u = (UnaryConstraint)cons;
-                if(futureDel.get(u.getVariable()) != null) {
-                    futureDel.put(u.getVariable(), u.getDomain());
-                } else {
-                    futureDel.get(u).addAll(u.getDomain());
+        boolean passed = true;
+
+        for(Variable var: vardom.keySet()) {
+            Set<Object> notallowed = new HashSet<>();
+            for(Object val: vardom.get(var)) {
+                for(Constraint cons: this.constraints) {
+                    if(cons.getScope().size()==1 && cons.getScope().contains(var)) {
+                        Map<Variable, Object> tmpInst = new HashMap<>();
+                        tmpInst.put(var, val);
+                        if(!cons.isSatisfiedBy(tmpInst)) {
+                            notallowed.add(val);
+                        }
+                    }
                 }
             }
+            vardom.get(var).removeAll(notallowed);
+            if(vardom.get(var).isEmpty())
+                passed = false;
         }
 
-        for(Variable var: futureDel.keySet()) {
-            vardom.get(var).removeAll(futureDel.get(vardom));
-            if(vardom.get(var).size() == 0)
-                return false;
-        }
+        return passed;
+    }
 
-        return true;
+    public boolean revise(Variable xi, Set<Object> di, Variable xj, Set<Object> dj) {
+        boolean del = false;
+
+        Set<Object> toRemove = new HashSet<>();
+
+        for(Object vi: di) {
+            boolean viable = false;
+            for(Object vj: dj) {
+                boolean allSatisfied = true;
+                for(Constraint cons: this.constraints) {
+                    Set<Variable> scope = cons.getScope();
+                    if(scope.size() == 2 && scope.contains(xi) && scope.contains(xj)) {
+                        Map<Variable, Object> tmpInst = new HashMap<>();
+                        tmpInst.put(xi, vi);
+                        tmpInst.put(xj, vj);
+                        if(!cons.isSatisfiedBy(tmpInst)) {
+                            allSatisfied = false;
+                            break;
+                        }
+                    }
+                }
+                if(allSatisfied) {
+                    viable = true;
+                    break;
+                }
+            }
+            if(!viable) {
+                toRemove.add(vi);
+                del = true;
+            }
+        }
+        di.removeAll(toRemove);
+        return del;
     }
 }

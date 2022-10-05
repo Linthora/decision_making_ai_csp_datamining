@@ -25,29 +25,15 @@
             <classpath refid="projet.classpath"/>
         </java>
     </target>
-    <!--<target name="runWindow" description="execution" depends="compile">
-        <java classname="interfaces.CorewarWindow" fork="false">
-            <arg value="progs/custom.red"/>
-            <arg value="progs/test_paper.red"/>
+    <target name="tQ" description="execution" depends="compile">
+        <java classname="test.utility.TestCustomQueue" fork="false">
+            <arg value="-Xdiags:verbose"/>
             <classpath refid="projet.classpath"/>
         </java>
-    </target>
-    <target name="test" description="run tests" depends="compile">
-        <java classname="test.Main" fork="false">
-            <classpath refid="projet.classpath"/>
-        </java>
-    </target>
-    <target name="checker" description="checking if .red programs in file progs have an accepted synthax">
-        <exec executable="sh">
-                <arg line="-c 'java -cp build corewar.Checker progs/*.red'" />
-        </exec>
     </target>
     <target name="doc">
         <javadoc sourcepath="src" destdir="doc">
-        <fileset dir="src" defaultexcludes="yes"/>
+            <classpath refid="projet.classpath" />
         </javadoc>
     </target>
-    <target name="jar" depends="compile">
-        <jar jarfile="corewar.jar" basedir="${projet.bin.dir}" manifest="${basedir}/MANIFEST.MF"/>
-    </target> -->
 </project>
