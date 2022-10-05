@@ -19,6 +19,11 @@ public class Variable {
         return this.domain;
     }
 
+    
+    /** 
+     * @param o other Variable to compare to
+     * @return true if variables' name are the same else false
+     */
     @Override
     public boolean equals(Object o) {
         if(o == this)
@@ -29,6 +34,10 @@ public class Variable {
         return this.name.equals(var.name);
     }
 
+    
+    /** 
+     * @return the hashcode of the variable name
+     */
     @Override
     public int hashCode() {
         return this.name.hashCode();

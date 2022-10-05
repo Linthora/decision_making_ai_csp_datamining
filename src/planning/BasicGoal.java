@@ -11,6 +11,11 @@ public class BasicGoal implements Goal {
         this.condition = condition;
     }
 
+    
+    /** 
+     * @param state
+     * @return true if state meets de condition (condition is in state)
+     */
     public boolean isSatisfiedBy(Map<Variable, Object> state) {
         return state.entrySet().containsAll(this.condition.entrySet());
     }

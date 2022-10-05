@@ -14,11 +14,21 @@ public class BasicAction implements Action {
         this.cost = cost;
     }
 
+    
+    /** 
+     * @param state
+     * @return true if the state contains all the preconditions
+     */
     @Override
     public boolean isApplicable(Map<Variable, Object> state) {
         return state.entrySet().containsAll(this.precondition.entrySet());
     }
 
+    
+    /** 
+     * @param state
+     * @return the successor of state
+     */
     @Override
     public Map<Variable, Object> successor(Map<Variable, Object> state) {
         if(isApplicable(state)) {
@@ -30,6 +40,10 @@ public class BasicAction implements Action {
         return state;
     }
 
+    
+    /** 
+     * @return int
+     */
     @Override
     public int getCost() {
         return this.cost;
