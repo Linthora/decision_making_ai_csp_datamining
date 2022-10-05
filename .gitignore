@@ -1,3 +1,4 @@
 build/**
 build/**/*.class
 .class
+.vscode
