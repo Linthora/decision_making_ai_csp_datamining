@@ -2,22 +2,29 @@ package representation;
 
 import java.util.*;
 
+/**
+ * Type of constraint stating that a specific variable must take a value in a given subset of its domain values.
+ */
 public class UnaryConstraint implements Constraint {
 
+    /**
+     * The concerned variable.
+     */
     protected Variable v;
+
+    /**
+     * The set of value that the variable must take in order to be accepted by this constraint.
+     */
     protected Set<Object> s;
 
+    /**
+     * Creates an unary type constraint given a variable and a subset of its domain containing accepted values for this variable.
+     * @param v the variable.
+     * @param s the accepted values for the variable.
+     */
     public UnaryConstraint(Variable v, Set<Object> s) {
         this.v = v;
         this.s = s;
-    }
-
-    public Variable getVariable() {
-        return this.v;
-    }
-
-    public Set<Object> getDomain() {
-        return this.s;
     }
 
     @Override

@@ -13,6 +13,7 @@
         <delete dir="build" />
         <mkdir dir="${projet.bin.dir}"/>
         <javac srcdir="${projet.sources.dir}" destdir="${projet.bin.dir}" debug="on" optimize="off" deprecation="on" includeantruntime="false">
+            <compilerarg value="-Xlint:unchecked"/>
             <classpath refid="projet.classpath"/>
         </javac>
     </target>

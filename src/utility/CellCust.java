@@ -1,6 +1,5 @@
 package utility;
 
-import java.util.*;
 
 public class CellCust <E extends Comparable<E>> {
     protected CellCust<E> previous;

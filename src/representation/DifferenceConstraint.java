@@ -2,9 +2,19 @@ package representation;
 
 import java.util.*;
 
+/**
+ * Type of constraint stating that the 2 given variables must be diffrents
+ */
 public class DifferenceConstraint implements Constraint {
+
+    /**
+     * The 2 variable concerned by this constraint
+     */
     protected Variable v1,v2;
 
+    /**
+     * Creates a DifferenceConstraint with the 2 given Variables
+     */
     public DifferenceConstraint(Variable v1, Variable v2) {
         this.v1 = v1;
         this.v2 = v2;

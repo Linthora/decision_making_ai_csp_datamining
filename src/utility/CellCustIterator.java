@@ -2,8 +2,8 @@ package utility;
 
 import java.util.*;
 
-public class CellCustIterator<E extends Comparable<E>> implements Iterator<CellCust> {
-    protected CellCust next;
+public class CellCustIterator<E extends Comparable<E>> implements Iterator<CellCust<E>> {
+    protected CellCust<E> next;
 
     public CellCustIterator(CellCust<E> h) {
         this.next = h;

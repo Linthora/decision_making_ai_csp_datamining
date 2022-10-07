@@ -2,6 +2,9 @@ package representation;
 
 import java.util.*;
 
+/**
+ * Object to represent a Variable that can only take true of false as value. Extends {@link representation.Variable}.
+ */
 public class BooleanVariable extends Variable {
 
     /**
