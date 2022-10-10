@@ -2,6 +2,7 @@
     <property name="projet.sources.dir" value="src"/>
     <property name="projet.bin.dir" value="build"/>
     <property name="projet.lib.dir" value="lib"/>
+    <property name="projet.doc.dir" value="doc"/>
 
     <path id="projet.classpath">
         <pathelement location="${projet.bin.dir}"/>
@@ -36,7 +37,7 @@
 
     <!-- run tests for custom priority queue -->
     <target name="testqueue" description="execution" depends="compile">
-        <java classname="test.utility.TestPriorityQueueHeap" fork="false">
+        <java classname="test.TestPriorityQueueHeap" fork="false">
             <arg value="-Xdiags:verbose"/>
             <classpath refid="projet.classpath"/>
         </java>
@@ -45,7 +46,7 @@
     <!-- generates the documentation of the project -->
     <target name="doc">
         <delete dir="${project.doc.dir}"/>
-        <javadoc sourcepath="src" destdir="doc" access="private">
+        <javadoc sourcepath="${projet.sources.dir}" destdir="doc" access="private">
             <classpath refid="projet.classpath" />
         </javadoc>
     </target>

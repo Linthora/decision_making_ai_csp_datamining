@@ -36,7 +36,7 @@
 
     <!-- run tests for custom priority queue -->
     <target name="testqueue" description="execution" depends="compile">
-        <java classname="test.utility.TestPriorityQueueHeap" fork="false">
+        <java classname="test.TestPriorityQueueHeap" fork="false">
             <arg value="-Xdiags:verbose"/>
             <classpath refid="projet.classpath"/>
         </java>
