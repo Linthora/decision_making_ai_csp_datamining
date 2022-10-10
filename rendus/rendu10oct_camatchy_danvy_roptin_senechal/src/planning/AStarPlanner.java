@@ -8,11 +8,8 @@ import representation.Variable;
  * A Class to solve given problem with AStar algorithm.
  * Implements {@link planning.Planner}.
  * 
- * AStar functionnement is sort of as opposed to Dijkstra as DFS is to BFS but in a more intelligent manner.
- * Instead of building the shortest path tree like Dijkstra, AStart will only
- * find the shortest path from our initial state to a state satisfying our goal
- * by using a goal-directed heuristic.
- * The condition being to have an admissible heuristic.
+ * AStar is a generalization of Dijkstra algorithm, exploring the best option first
+ * based on a heuristic evaluation.
  * 
  * Worst-case complexity: O( b^(d) )
  * for graphs with a branching factor of b and a depth of d 
