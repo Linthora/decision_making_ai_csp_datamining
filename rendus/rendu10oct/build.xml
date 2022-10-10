@@ -1,0 +1,52 @@
+<project name="IA_aide_decision" default="compile" basedir=".">
+    <property name="projet.sources.dir" value="src"/>
+    <property name="projet.bin.dir" value="build"/>
+    <property name="projet.lib.dir" value="lib"/>
+
+    <path id="projet.classpath">
+        <pathelement location="${projet.bin.dir}"/>
+        <fileset dir="lib">
+            <include name="**/*.jar"/>
+            <include name="**/*.zip"/>
+        </fileset>
+    </path>
+
+    <!-- Compile -->
+    <target name="compile" description="Compilation des classes">
+        <delete dir="build" />
+        <mkdir dir="${projet.bin.dir}"/>
+        <javac srcdir="${projet.sources.dir}" destdir="${projet.bin.dir}" debug="on" optimize="off" deprecation="on" includeantruntime="false">
+            <compilerarg value="-Xlint:unchecked"/>
+            <classpath refid="projet.classpath"/>
+        </javac>
+    </target>
+
+    <!-- init -->
+    <target name="init">
+        <mkdir dir="${projet.bin.dir}"/>
+    </target>
+
+    <!-- run tests -->
+    <target name="test" description="execution" depends="compile">
+        <java classname="test.Test" fork="false">
+          <arg value="-Xdiags:verbose"/>
+            <classpath refid="projet.classpath"/>
+        </java>
+    </target>
+
+    <!-- run tests for custom priority queue -->
+    <target name="testqueue" description="execution" depends="compile">
+        <java classname="test.utility.TestPriorityQueueHeap" fork="false">
+            <arg value="-Xdiags:verbose"/>
+            <classpath refid="projet.classpath"/>
+        </java>
+    </target>
+
+    <!-- generates the documentation of the project -->
+    <target name="doc">
+        <delete dir="${project.doc.dir}"/>
+        <javadoc sourcepath="src" destdir="doc" access="private">
+            <classpath refid="projet.classpath" />
+        </javadoc>
+    </target>
+</project>
