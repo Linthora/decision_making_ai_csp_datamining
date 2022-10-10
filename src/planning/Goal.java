@@ -11,7 +11,7 @@ public interface Goal {
     /**
      * Tells us if the given state satisfies our goals criteria.
      * @param state State to check
-     * @return true if the goal is satisfied by the {@value}state
+     * @return true if the goal is satisfied by the state.
      */
     public boolean isSatisfiedBy(Map<Variable, Object> state);
 }

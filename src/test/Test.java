@@ -37,6 +37,15 @@ import csptests.RandomValueHeuristicTests; */
  */
 public class Test {
 
+    /**
+     * Doc constructor to stop useless warning.
+     */
+    public Test() {}
+
+    /**
+     * Main running all the tests.
+     * @param args not used
+     */
     public static void main(String[] args) {
 
         boolean ok = true;

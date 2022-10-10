@@ -19,8 +19,8 @@ public class Variable {
 
     /**
      * Creates a new variable given its name and its domain.
-     * @param name
-     * @param domain
+     * @param name name of the variable.
+     * @param domain domain of the variable.
      */
     public Variable(String name, Set<Object> domain) {
         this.name = name;

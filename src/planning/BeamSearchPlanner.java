@@ -50,7 +50,14 @@ public class BeamSearchPlanner implements Planner {
      */
     protected int exploredNodes;
 
+    /**
+     * the initial size of our field of view.
+     */
     protected int k;
+
+    /**
+     * our factor of incrementation for our field of view. 
+     */
     protected int delta;
 
 
@@ -60,6 +67,9 @@ public class BeamSearchPlanner implements Planner {
      * @param initialState a state from which we will start to search.
      * @param actions all the actions to navigate from different states.
      * @param goal our goal.
+     * @param heuristic the heuristic which we'll use to make our evalutations.
+     * @param k the initial size of our field of view.
+     * @param delta our factor of incrementation for our field of view. 
      */
     public BeamSearchPlanner(Map<Variable, Object> initialState, Set<Action> actions, Goal goal, Heuristic heuristic, int k, int delta) {
         this.initialState = initialState;
@@ -181,6 +191,10 @@ public class BeamSearchPlanner implements Planner {
         return this.goal;
     }
 
+    /**
+     * Returns the heuristic used by this object.
+     * @return an heuristic.
+     */
     public Heuristic getHeuristic() {
         return this.heuristic;
     }

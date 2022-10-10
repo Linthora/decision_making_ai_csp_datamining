@@ -51,6 +51,7 @@ public class AStarPlanner implements Planner {
      * @param initialState a state from which we will start to search.
      * @param actions all the actions to navigate from different states.
      * @param goal our goal.
+     * @param heuristic the heuristic which we'll use to make our evalutations.
      */
     public AStarPlanner(Map<Variable, Object> initialState, Set<Action> actions, Goal goal, Heuristic heuristic) {
         this.initialState = initialState;
@@ -147,6 +148,10 @@ public class AStarPlanner implements Planner {
         return this.goal;
     }
 
+    /**
+     * Returns the heuristic used by this object.
+     * @return an heuristic.
+     */
     public Heuristic getHeuristic() {
         return this.heuristic;
     }

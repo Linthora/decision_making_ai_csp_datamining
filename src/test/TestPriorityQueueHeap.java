@@ -7,6 +7,16 @@ import utility.*;
  * Not all the method in the class need to be tested as they're based on the fully tested {@link java.util.ArrayList} class.
  */
 public class TestPriorityQueueHeap {
+
+    /**
+     * Doc constructor to stop useless warning.
+     */
+    public TestPriorityQueueHeap() {}
+
+    /**
+     * Main running test of the queue.
+     * @param args not used.
+     */
     public static void main(String[] args) {
         System.out.println("Starting tests:");
         System.out.println(testPoll() ? "Pool : OK" : "KO");

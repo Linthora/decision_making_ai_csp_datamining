@@ -14,7 +14,9 @@ public class DifferenceConstraint implements Constraint {
     protected Variable v1,v2;
 
     /**
-     * Creates a DifferenceConstraint with the 2 given Variables
+     * Creates a DifferenceConstraint with the 2 given Variables.
+     * @param v1 the first variable
+     * @param v2 the second variable
      */
     public DifferenceConstraint(Variable v1, Variable v2) {
         this.v1 = v1;

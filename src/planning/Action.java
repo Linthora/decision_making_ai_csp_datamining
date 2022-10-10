@@ -18,7 +18,7 @@ public interface Action {
     /**
      * Returns the successor state of given state after this ation if applicable to it
      * @param state a state
-     * @return the successor of {@value state}
+     * @return the successor of state
      */
     public Map<Variable, Object> successor(Map<Variable, Object> state);
 
