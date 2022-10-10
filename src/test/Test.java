@@ -14,18 +14,27 @@ import planningtests.BasicActionTests;
 import planningtests.BasicGoalTests;
 import planningtests.DFSPlannerTests;
 import planningtests.DijkstraPlannerTests;
+import planningtests.OptimalCostPlannerTests;
+import planningtests.PlannerTests;
+import planning.*;
+import representation.*;
+import java.util.*;
 
 //TP3 imports
-import csptests.AbstractSolverTests;
+/* import csptests.AbstractSolverTests;
 import csptests.ArcConsistencyTests;
 import csptests.BacktrackSolverTests;
 import csptests.DomainSizeVariableHeuristicTests;
 import csptests.HeuristicMACSolverTests;
 import csptests.MACSolverTests;
 import csptests.NbConstraintsVariableHeuristicTests;
-import csptests.RandomValueHeuristicTests;
+import csptests.RandomValueHeuristicTests; */
 
 
+
+/**
+ * Executable class to run tests for classes.
+ */
 public class Test {
 
     public static void main(String[] args) {
@@ -64,6 +73,27 @@ public class Test {
         //AStar
         ok = ok && AStarPlannerTests.testPlan();
 
+        System.out.println(ok ? "All test passed !!!!!! yaaay :-)" : "At least one test failed...KO :'-(");
+
+
+        System.out.println("\n\nEntering bonus BeamSearchPlanner tests");
+        //PriorityQueueHeap for BeamSearch
+        ok = ok && TestPriorityQueueHeap.testAll();
+
+        //BeamSearch
+        System.out.println("[Tests] [BeamSearchPlanner::plan] launched");
+        ok = ok && new PlannerTests(( Map<Variable, Object> init , Set<Action> acts , Goal goal) -> new BeamSearchPlanner( init , acts , goal, new HeuristicForTest() , 20,5 )).testPlan();
+        System.out.println("[Tests] [BeamSearchPlanner::plan] " + (ok ? "passed" : "failed"));
+        
+        System.out.println("[Tests] [BeamSearchPlanner::plan with optimal cost solution] launched");
+        ok = ok && new OptimalCostPlannerTests(( Map<Variable, Object> init , Set<Action> acts , Goal goal) -> new BeamSearchPlanner( init , acts , goal, new HeuristicForTest() , 20,5 )).testPlan();
+
+        System.out.println("[Tests] [BeamSearchPlanner::plan] " + (ok ? "passed" : "failed"));
+
+        System.out.println(ok ? "BeamSearchPlanner and utility are working !!!!!" : "At least one test failed for BeamSearchPlanner and utility.. :'-(");
+        
+
+        /*
         //TEST TP3
         ok = ok && AbstractSolverTests.testIsConsistent();
         ok = ok && BacktrackSolverTests.testSolve();
@@ -71,5 +101,6 @@ public class Test {
         ok = ok && ArcConsistencyTests.testRevise();
 
         System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");
+        */
     }
 }

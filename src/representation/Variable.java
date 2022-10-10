@@ -3,7 +3,7 @@ package representation;
 import java.util.*;
 
 /**
- * An Oject representing a general variable. A variable defined by its name and its domain.
+ * Class representing a general variable. A variable defined by its name and its domain.
  */
 public class Variable {
 

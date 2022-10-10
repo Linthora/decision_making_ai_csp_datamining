@@ -4,6 +4,7 @@ import java.util.*;
 
 /**
  * Type of constraint stating that a specific variable must take a value in a given subset of its domain values.
+ * Implements {@link representation.Constraint}.
  */
 public class UnaryConstraint implements Constraint {
 

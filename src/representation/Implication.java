@@ -3,7 +3,8 @@ package representation;
 import java.util.*;
 
 /**
- * Type of constraint representing an implication
+ * Type of constraint representing an implication.
+ * Implements {@link representation.Constraint}.
  */
 public class Implication implements Constraint {
 

@@ -3,21 +3,27 @@ package planning;
 import java.util.*;
 
 import representation.Variable;
+import utility.PriorityQueueHeap;
 
 /**
- * A Class to solve given problem with AStar algorithm.
+ * A Class to solve given problem with BeamSearch algorithm.
  * Implements {@link planning.Planner}.
  * 
- * AStar functionnement is sort of as opposed to Dijkstra as DFS is to BFS but in a more intelligent manner.
- * Instead of building the shortest path tree like Dijkstra, AStart will only
- * find the shortest path from our initial state to a state satisfying our goal
- * by using a goal-directed heuristic.
- * The condition being to have an admissible heuristic.
+ * Sometimes AStar cost isn't efficient enough and start wandering to much exploring various options.
+ * So one solution would be to sharpen our view even more and reduce our field of view to only
+ * the very best options available to us. Thus leading to this algorithm.
+ * It works just as AStar with the difference being that we use a priority queue with a max capacity.
+ * We start with an initial capacity of k. And if we end up in a dead end we restart the process by
+ * increasing ou field of view a little (ie icrementing our capacity by a given factor delta).
  * 
- * Worst-case complexity: O( b^(d) )
- * for graphs with a branching factor of b and a depth of d 
+ * In the end, when our capacity is illimited, it is like running AStar so we are almost guarented to get
+ * one of the best possible option.
+ * 
+ * I didn't looked to much into the worst-case complexity of this algorithm.
+ * It should resemble AStar one's however the fact that we have a given capacity that needs 
+ * to be incremented if no solutions was found could make it harder to evaluate.
  */
-public class AStarPlanner implements Planner {
+public class BeamSearchPlanner implements Planner {
 
     /**
      * Our starting point instantiation.
@@ -44,6 +50,9 @@ public class AStarPlanner implements Planner {
      */
     protected int exploredNodes;
 
+    protected int k;
+    protected int delta;
+
 
     /**
      * Creates a new planner using Dijkstra algorithm to search a path 
@@ -52,12 +61,14 @@ public class AStarPlanner implements Planner {
      * @param actions all the actions to navigate from different states.
      * @param goal our goal.
      */
-    public AStarPlanner(Map<Variable, Object> initialState, Set<Action> actions, Goal goal, Heuristic heuristic) {
+    public BeamSearchPlanner(Map<Variable, Object> initialState, Set<Action> actions, Goal goal, Heuristic heuristic, int k, int delta) {
         this.initialState = initialState;
         this.actions = actions;
         this.goal = goal;
         this.heuristic = heuristic;
         this.exploredNodes = 0;
+        this.k = k;
+        this.delta = delta;
     }
 
     @Override
@@ -69,14 +80,37 @@ public class AStarPlanner implements Planner {
 
         DistanceState first = new DistanceState(this.initialState, (float) this.heuristic.estimate(this.initialState));
         Map<Map<Variable, Object>, DistanceState> valueMap = new HashMap<>();
-        PriorityQueue<DistanceState> value = new PriorityQueue<>();
+        
+        PriorityQueueHeap<DistanceState> value = new PriorityQueueHeap<>(this.k);
         valueMap.put(this.initialState, first);
         value.add(first);
 
         Map<Map<Variable, Object>, Float> distanceMap = new HashMap<>();
         distanceMap.put(this.initialState, (float) 0);
 
-        while( value.size() > 0 ) {
+        // if both condition are false, it means we already did an iteration of the algorithm as AStar resulting in no solutions.
+        while( value.size() > 0 || !value.hasNeverReachMax()) {
+
+
+            if(value.isEmpty()) { // would mean no solution was found so we need to start over with queue of k + delta (with k = k + delta)
+                plan = new HashMap<>();
+
+                father = new HashMap<>();
+                father.put(this.initialState, null);
+
+                first = new DistanceState(this.initialState, (float) this.heuristic.estimate(this.initialState));
+                valueMap = new HashMap<>();
+
+                this.k += this.delta;
+                value = new PriorityQueueHeap<>(this.k);
+                
+                valueMap.put(this.initialState, first);
+                value.add(first);
+
+                distanceMap = new HashMap<>();
+                distanceMap.put(this.initialState, (float) 0);
+            }
+
             this.exploredNodes++;
             Map<Variable, Object> instantiation = value.poll().getState();
             valueMap.remove(instantiation);

@@ -4,7 +4,7 @@ import java.util.*;
 import representation.Variable;
 
 /**
- * Interface used to represent an action/move possible to move from a state to another
+ * Interface used to represent an action/move possible to move from a state to another.
  */
 public interface Action {
 

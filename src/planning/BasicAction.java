@@ -5,6 +5,7 @@ import representation.Variable;
 
 /**
  * An Object representing a basic action that can take us to one state to another under the right condictions.
+ * Implements {@link planning.Action}.
  */
 public class BasicAction implements Action {
 

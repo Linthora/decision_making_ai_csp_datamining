@@ -3,7 +3,7 @@ package representation;
 import java.util.*;
 
 /**
- * Interface used to represent a constraint that a state can or can't satisfy
+ * Interface used to represent a constraint that a state can or can't satisfy.
  */
 public interface Constraint {
 

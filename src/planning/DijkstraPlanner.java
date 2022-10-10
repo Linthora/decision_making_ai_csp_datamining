@@ -4,13 +4,47 @@ import java.util.*;
 
 import representation.Variable;
 
+/**
+ * A Class to solve given problem with Dijkstra algorithm.
+ * Implements {@link planning.Planner}.
+ * 
+ * Dijkstra resemble {@link planning.BFSPlanner} but instead take in account the cost of each action.
+ * So it consistently explore new node that we discovered with the smallest cost of actions.
+ * Meaning the difference resides mostly in using a priority queue rather than a simple queue.
+ 
+ * Worst-case complexity: O(|V| + |E|) 
+ * (where V is all the possible node of our graph and E is all the edges of our graph)
+ * 
+ */
 public class DijkstraPlanner implements Planner {
 
+    /**
+     * Our starting point instantiation.
+     */
     protected Map<Variable, Object> initialState;
+    
+    /**
+     * All the possible action to navigate our graph.
+     */
     protected Set<Action> actions;
+
+    /**
+     * Our goal.
+     */
     protected Goal goal;
+
+    /**
+     * The number of node we explored after trying to find a solution with this class.
+     */
     protected int exploredNodes;
 
+    /**
+     * Creates a new planner using Dijkstra algorithm to search a path 
+     * from given initial state to a state satisfying given goal with given possible actions.
+     * @param initialState a state from which we will start to search.
+     * @param actions all the actions to navigate from different states.
+     * @param goal our goal.
+     */
     public DijkstraPlanner(Map<Variable,Object> initialState, Set<Action> actions, Goal goal) {
         this.initialState = initialState;
         this.actions = actions;
@@ -64,6 +98,16 @@ public class DijkstraPlanner implements Planner {
         return getDijkstraPlan(father, plan, goals, distanceMap);
     }
 
+    /**
+     * Private method to find the state with the lowest value 
+     * in a map with a key contained in a given set of state.
+     * 
+     * Complexity: θ(|E|), where E is the set of key we look into.
+     * 
+     * @param map a map containing the state as key and their value as value.
+     * @param okKey a set of state that we need to evaluate.
+     * @return the state with the lowest value from given set and map.
+     */
     private Map<Variable, Object> argmin(Map<Map<Variable, Object>, DistanceState> map, Set<Map<Variable, Object>> okKey) {
         Map<Variable, Object> res = null;
         Float min = null;
@@ -81,6 +125,15 @@ public class DijkstraPlanner implements Planner {
         return res;
     }
 
+    /**
+     * Private method used to rebuild the previously found shortest path from our 
+     * initial state to a state satisfying our goal.
+     * @param father a Map linking a state as key to another state which would be the state that lead to the key state via an action.
+     * @param plan a Map linking a state as key to the last action that lead to it.
+     * @param goals a set of state we found that are statisfying our goal.
+     * @param distance a Map linking states we explored and their distance from our starting point.
+     * @return the (or at least one of the) shortest path from our inital path to a state satisfying our goal. (short in terms of cost of action)
+     */
     private List<Action> getDijkstraPlan(Map<Map<Variable, Object>,Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan, Set<Map<Variable, Object>> goals, Map<Map<Variable, Object>, DistanceState> distance) {
         LinkedList<Action> dijkstra_plan = new LinkedList<>();
         Map<Variable, Object> goal = argmin(distance, goals);

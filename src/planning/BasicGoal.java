@@ -5,6 +5,7 @@ import representation.Variable;
 
 /**
  * A type of goal represented by a partial, or not, instantiation.
+ * Implements {@link planning.Goal}.
  */
 public class BasicGoal implements Goal {
 

@@ -4,6 +4,7 @@ import java.util.*;
 
 /**
  * Type of constraint stating that the 2 given variables must be diffrents
+ * Implements {@link representation.Constraint}.
  */
 public class DifferenceConstraint implements Constraint {
 
