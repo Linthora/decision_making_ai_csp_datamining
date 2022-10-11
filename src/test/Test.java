@@ -110,8 +110,12 @@ public class Test {
         ok = ok && ArcConsistencyTests.testEnforceNodeConsistency();
         ok = ok && ArcConsistencyTests.testRevise();
         ok = ok && ArcConsistencyTests.testAC1();
-
         ok = ok && MACSolverTests.testSolve();
+        ok = ok && NbConstraintsVariableHeuristicTests.testBest();
+        ok = ok && DomainSizeVariableHeuristicTests.testBest();
+        ok = ok && RandomValueHeuristicTests.testOrdering();
+        ok = ok && HeuristicMACSolverTests.testSolve();
+        //ok = ok && HeuristicMACSolverTests.testSolve();
 
         System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");
         

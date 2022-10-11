@@ -22,15 +22,12 @@ public class ArcConsistency {
             Set<Object> notallowed = new HashSet<>();
 
             for(Object val: vardom.get(var)) {
+                Map<Variable, Object> tmpInst = new HashMap<>();
+                tmpInst.put(var, val);
+
                 for(Constraint cons: this.constraints) {
-
-                    if(cons.getScope().size()==1 && cons.getScope().contains(var)) {
-                        Map<Variable, Object> tmpInst = new HashMap<>();
-                        tmpInst.put(var, val);
-
-                        if(!cons.isSatisfiedBy(tmpInst)) {
-                            notallowed.add(val);
-                        }
+                    if(cons.getScope().size()==1 && cons.getScope().contains(var) && !cons.isSatisfiedBy(tmpInst)) {
+                        notallowed.add(val);
                     }
                 }
             }
