@@ -21,14 +21,14 @@ import representation.*;
 import java.util.*;
 
 //TP3 imports
-/* import csptests.AbstractSolverTests;
+import csptests.AbstractSolverTests;
 import csptests.ArcConsistencyTests;
 import csptests.BacktrackSolverTests;
 import csptests.DomainSizeVariableHeuristicTests;
 import csptests.HeuristicMACSolverTests;
 import csptests.MACSolverTests;
 import csptests.NbConstraintsVariableHeuristicTests;
-import csptests.RandomValueHeuristicTests; */
+import csptests.RandomValueHeuristicTests;
 
 
 
@@ -102,14 +102,18 @@ public class Test {
         System.out.println(ok ? "BeamSearchPlanner and utility are working !!!!!" : "At least one test failed for BeamSearchPlanner and utility.. :'-(");
         
 
-        /*
+        System.out.println("\nEntering CSP tests:\n\n");
+        
         //TEST TP3
         ok = ok && AbstractSolverTests.testIsConsistent();
         ok = ok && BacktrackSolverTests.testSolve();
         ok = ok && ArcConsistencyTests.testEnforceNodeConsistency();
         ok = ok && ArcConsistencyTests.testRevise();
+        ok = ok && ArcConsistencyTests.testAC1();
+
+        ok = ok && MACSolverTests.testSolve();
 
         System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");
-        */
+        
     }
 }
