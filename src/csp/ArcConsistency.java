@@ -4,7 +4,9 @@ import representation.*;
 import java.util.*;
 
 public class ArcConsistency {
+    
     protected Set<Constraint> constraints;
+
     public ArcConsistency(Set<Constraint> constraints) {
         for(Constraint cons : constraints)
             if(cons.getScope().size() > 2)
@@ -16,15 +18,16 @@ public class ArcConsistency {
         boolean passed = true;
 
         for(Variable var: vardom.keySet()) {
+
             Set<Object> notallowed = new HashSet<>();
+
             for(Object val: vardom.get(var)) {
+                Map<Variable, Object> tmpInst = new HashMap<>();
+                tmpInst.put(var, val);
+
                 for(Constraint cons: this.constraints) {
-                    if(cons.getScope().size()==1 && cons.getScope().contains(var)) {
-                        Map<Variable, Object> tmpInst = new HashMap<>();
-                        tmpInst.put(var, val);
-                        if(!cons.isSatisfiedBy(tmpInst)) {
-                            notallowed.add(val);
-                        }
+                    if(cons.getScope().size()==1 && cons.getScope().contains(var) && !cons.isSatisfiedBy(tmpInst)) {
+                        notallowed.add(val);
                     }
                 }
             }
@@ -69,5 +72,31 @@ public class ArcConsistency {
         }
         di.removeAll(toRemove);
         return del;
+    }
+
+    public boolean ac1(Map<Variable, Set<Object>> doms) {
+        if(!enforceNodeConsistency(doms))
+            return false;
+
+        boolean changed = true;
+        Set<Variable> vars = doms.keySet();
+
+        while(changed) {
+            changed = false;
+
+            for(Variable vi: vars) {
+                for(Variable vj: vars) {
+                    if( !(vi.equals(vj)) && revise(vi, doms.get(vi), vj, doms.get(vj)))
+                        changed = true;
+                }
+            }
+        }
+
+        for(Variable var: vars) {
+            if(doms.get(var).isEmpty())
+                return false;
+        }
+
+        return true;
     }
 }
