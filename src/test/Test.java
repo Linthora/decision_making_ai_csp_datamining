@@ -30,6 +30,12 @@ import csptests.MACSolverTests;
 import csptests.NbConstraintsVariableHeuristicTests;
 import csptests.RandomValueHeuristicTests;
 
+//TP4 imports
+import dataminingtests.AbstractAssociationRuleMinerTests;
+import dataminingtests.AbstractItemsetMinerTests;
+import dataminingtests.AprioriTests;
+import dataminingtests.BruteForceAssociationRuleMinerTests;
+
 
 
 /**
@@ -101,10 +107,10 @@ public class Test {
 
         System.out.println(ok ? "BeamSearchPlanner and utility are working !!!!!" : "At least one test failed for BeamSearchPlanner and utility.. :'-(");
         
-
-        System.out.println("\nEntering CSP tests:\n\n");
         
         //TEST TP3
+        System.out.println("\nEntering CSP tests:\n\n");
+        
         ok = ok && AbstractSolverTests.testIsConsistent();
         ok = ok && BacktrackSolverTests.testSolve();
         ok = ok && ArcConsistencyTests.testEnforceNodeConsistency();
@@ -115,7 +121,22 @@ public class Test {
         ok = ok && DomainSizeVariableHeuristicTests.testBest();
         ok = ok && RandomValueHeuristicTests.testOrdering();
         ok = ok && HeuristicMACSolverTests.testSolve();
-        //ok = ok && HeuristicMACSolverTests.testSolve();
+        
+        //TEST TP4
+
+        System.out.println("\nEntering datamining tests:\n\n");
+
+        // todo
+        ok = ok && AbstractItemsetMinerTests.testFrequency();
+        ok = ok && AprioriTests.testFrequentSingletons();
+        ok = ok && AprioriTests.testCombine();
+        //ok = ok && AprioriTests.testAllSubsetsFrequent();
+        //ok = ok && AprioriTests.testExtract();
+        //ok = ok && AbstractAssociationRuleMinerTests.testFrequency();
+        //ok = ok && AbstractAssociationRuleMinerTests.testConfidence();
+        //ok = ok && BruteForceAssociationRuleMinerTests.testAllCandidatePremises(); // t e s t A l l C a n d i d a t e P r e m i s e s ();
+        //ok = ok && BruteForceAssociationRuleMinerTests.testExtract();
+
 
         System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");
         
