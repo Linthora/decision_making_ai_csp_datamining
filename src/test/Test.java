@@ -130,11 +130,13 @@ public class Test {
         ok = ok && AbstractItemsetMinerTests.testFrequency();
         ok = ok && AprioriTests.testFrequentSingletons();
         ok = ok && AprioriTests.testCombine();
+        
+        System.out.println("\u001B[31m\nRemains TODO allSubsetsFrequent() && extract for Apriori\u001B[0m\n");
         //ok = ok && AprioriTests.testAllSubsetsFrequent();
         //ok = ok && AprioriTests.testExtract();
-        //ok = ok && AbstractAssociationRuleMinerTests.testFrequency();
-        //ok = ok && AbstractAssociationRuleMinerTests.testConfidence();
-        //ok = ok && BruteForceAssociationRuleMinerTests.testAllCandidatePremises(); // t e s t A l l C a n d i d a t e P r e m i s e s ();
+        ok = ok && AbstractAssociationRuleMinerTests.testFrequency();
+        ok = ok && AbstractAssociationRuleMinerTests.testConfidence();
+        ok = ok && BruteForceAssociationRuleMinerTests.testAllCandidatePremises();
         //ok = ok && BruteForceAssociationRuleMinerTests.testExtract();
 
 
