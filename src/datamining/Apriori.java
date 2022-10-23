@@ -26,25 +26,7 @@ public class Apriori extends AbstractItemsetMiner {
 
     public static SortedSet<BooleanVariable> combine(SortedSet<BooleanVariable> s1, SortedSet<BooleanVariable> s2) {
         
-        /* if(s1.size() == s2.size() && s1.size()!=0) {
-            if(!s1.last().equals(s2.last())) {
-    
-                if(s1.headSet(s1.last()).equals(s2.headSet(s2.last()))) {
-                    
-                    SortedSet<BooleanVariable> res = new TreeSet<>(COMPARATOR);
-                    res.addAll(s1);
-                    res.add(s2.last());
-                    System.out.println("Hello "+res);
-                    return res;
-                }
-            }
-        }
-        return null; */
-
-        if(s1.size() == 0 || s1.size() != s2.size() || s1.last().equals(s2.last()) )
-            return null;
-
-        if(!s1.headSet(s1.last()).equals(s2.headSet(s2.last())))
+        if(s1.size() == 0 || s1.size() != s2.size() || s1.last().equals(s2.last()) || !s1.headSet(s1.last()).equals(s2.headSet(s2.last())))
             return null;
         
         SortedSet<BooleanVariable> res = new TreeSet<>(COMPARATOR);
@@ -52,6 +34,16 @@ public class Apriori extends AbstractItemsetMiner {
         res.add(s2.last());
         
         return res; 
+    }
+
+    public static boolean allSubsetsFrequent(Set<BooleanVariable> items, Collection<SortedSet<BooleanVariable>> frequentsItems) {
+        //boolean res = true;
+//
+        //for(BooleanVariable bv: items) {
+        //    for()
+        //}
+        // TODO ?????
+        return false;
     }
 
     @Override

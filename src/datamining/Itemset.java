@@ -8,8 +8,6 @@ public class Itemset {
     protected Set<BooleanVariable> items;
     protected float freq;
 
-    // treeSetSomewhere ? 
-    // ie SortedSet **
     public Itemset(Set<BooleanVariable> items, float freq) {
         this.items = items;
         this.freq = freq;
