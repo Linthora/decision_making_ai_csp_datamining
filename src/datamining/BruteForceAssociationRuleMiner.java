@@ -40,12 +40,28 @@ public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner
     @Override
     public Set<AssociationRule> extract(float minFreq, float minConfidence) {
         ItemsetMiner setMiner = new Apriori(this.database);
+        Set<Itemset> frequentItemset = setMiner.extract(minFreq);
         
-        Set<Set<BooleanVariable>> possiblePremisse = BruteForceAssociationRuleMiner.allCandidatePremises(this.database.getItems());
-        Set<Set<BooleanVariable>> acceptedPremisse = new HashSet<>();
-        // Last HERE but need APriori Done
+        Set<AssociationRule> res = new HashSet<>();
 
-        // TODO Auto-generated method stub
-        return null;
+        for(Itemset x: frequentItemset) {
+            for(Set<BooleanVariable> y: allCandidatePremises(x.getItems())) {
+                Set<BooleanVariable> xWithoutY = new HashSet<>(x.getItems());
+                xWithoutY.removeAll(y);
+                //blbal heeeeere
+                //Itemset xWithoutYItemset = new Itemset(xWithoutY, minFreq)
+                AssociationRule newCandidate = new AssociationRule(y, xWithoutY, x.getFrequency(), AbstractAssociationRuleMiner.confidence(y, xWithoutY, frequentItemset));
+                if( newCandidate.getConfidence() >= minConfidence && newCandidate.getFrequency() >= minFreq ) { 
+                    //x.getFrequency() / AbstractAssociationRuleMiner.frequency(xWithoutY, frequentItemset) >= minConfidence) {
+                    res.add(newCandidate);
+                    //res.add(new AssociationRule(y, xWithoutY, x.getFrequency(), AbstractAssociationRuleMiner.confidence(y, xWithoutY, frequentItemset)));
+                }
+
+            }
+            
+        }
+
+        //System.out.println("res -> " + res);
+        return res;
     }
 }

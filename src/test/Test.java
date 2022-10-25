@@ -130,14 +130,12 @@ public class Test {
         ok = ok && AbstractItemsetMinerTests.testFrequency();
         ok = ok && AprioriTests.testFrequentSingletons();
         ok = ok && AprioriTests.testCombine();
-        
-        System.out.println("\u001B[31m\nRemains TODO allSubsetsFrequent() && extract for Apriori\u001B[0m\n");
-        //ok = ok && AprioriTests.testAllSubsetsFrequent();
-        //ok = ok && AprioriTests.testExtract();
+        ok = ok && AprioriTests.testAllSubsetsFrequent();
+        ok = ok && AprioriTests.testExtract();
         ok = ok && AbstractAssociationRuleMinerTests.testFrequency();
         ok = ok && AbstractAssociationRuleMinerTests.testConfidence();
         ok = ok && BruteForceAssociationRuleMinerTests.testAllCandidatePremises();
-        //ok = ok && BruteForceAssociationRuleMinerTests.testExtract();
+        ok = ok && BruteForceAssociationRuleMinerTests.testExtract();
 
 
         System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");

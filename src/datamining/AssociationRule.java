@@ -14,7 +14,7 @@ public class AssociationRule {
         this.confiance = conf;
     }
 
-    public Set<BooleanVariable> getPremisse() {
+    public Set<BooleanVariable> getPremise() {
         return this.premisse;
     }
 
@@ -26,8 +26,13 @@ public class AssociationRule {
         return this.frequency;
     }
 
-    public float getConfiance() {
+    public float getConfidence() {
         return this.confiance;
+    }
+
+    @Override
+    public String toString() {
+        return "ASSOCIATION RULE: premisse : " + this.premisse + "----- conclusion: " + this.conclusion+" --- freq: " + this.frequency + " ---- confidence : "+ this.confiance +"   ]";
     }
 
 }
