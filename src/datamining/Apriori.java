@@ -63,13 +63,15 @@ public class Apriori extends AbstractItemsetMiner {
         }
 
         while(!frequentSetsK.isEmpty() && frequentSetsK.get(0).size() < this.base.getItems().size()) {
+
             List<SortedSet<BooleanVariable>> newHeight = new LinkedList<>();
+            
             for(int i=0; i < frequentSetsK.size(); ++i) { //SortedSet<BooleanVariable> s1: frequentSetsK) {
                 for(int j=i+1; j < frequentSetsK.size(); ++j) { //SortedSet<BooleanVariable> s2: frequentSetsK) {
 
                     SortedSet<BooleanVariable> newCombination = Apriori.combine(frequentSetsK.get(i), frequentSetsK.get(j));
                     
-                    if(newCombination != null && Apriori.allSubsetsFrequent(newCombination, frequentSetsK)) {
+                    if(newCombination != null) {
                         float currentFreq = this.frequency(newCombination);
                         if(currentFreq >= minFreq) {
                             res.add(new Itemset(newCombination, currentFreq));
