@@ -8,47 +8,22 @@ import utility.PriorityQueueHeap;
 /**
  * A Class to solve given problem with BeamSearch algorithm.
  * Implements {@link planning.Planner}.
- * 
+ *
  * Sometimes AStar cost isn't efficient enough and start wandering to much exploring various options.
  * So one solution would be to sharpen our view even more and reduce our field of view to only
  * the very best options available to us. Thus leading to this algorithm.
  * It works just as AStar with the difference being that we use a priority queue with a max capacity.
  * We start with an initial capacity of k. And if we end up in a dead end we restart the process by
  * increasing ou field of view a little (ie icrementing our capacity by a given factor delta).
- * 
+ *
  * In the end, when our capacity is illimited, it is like running AStar so we are almost guarented to get
  * one of the best possible option.
- * 
+ *
  * I didn't looked to much into the worst-case complexity of this algorithm.
- * It should resemble AStar one's however the fact that we have a given capacity that needs 
+ * It should resemble AStar one's however the fact that we have a given capacity that needs
  * to be incremented if no solutions was found could make it harder to evaluate.
  */
-public class BeamSearchPlanner implements Planner {
-
-    /**
-     * Our starting point instantiation.
-     */
-    protected Map<Variable, Object> initialState;
-
-    /**
-     * All the possible action to navigate our graph.
-     */
-    protected Set<Action> actions;
-
-    /**
-     * Our goal.
-     */
-    protected Goal goal;
-
-    /**
-     * Given heuristic to use.
-     */
-    protected Heuristic heuristic;
-
-    /**
-     * The number of node we explored after trying to find a solution with this class.
-     */
-    protected int exploredNodes;
+public class BeamSearchPlanner extends AStarPlanner implements Planner {
 
     /**
      * the initial size of our field of view.
@@ -56,27 +31,29 @@ public class BeamSearchPlanner implements Planner {
     protected int k;
 
     /**
-     * our factor of incrementation for our field of view. 
+     * our factor of incrementation for our field of view.
      */
     protected int delta;
 
 
     /**
-     * Creates a new planner using Dijkstra algorithm to search a path 
+     * Creates a new planner using Dijkstra algorithm to search a path
      * from given initial state to a state satisfying given goal with given possible actions.
      * @param initialState a state from which we will start to search.
      * @param actions all the actions to navigate from different states.
      * @param goal our goal.
      * @param heuristic the heuristic which we'll use to make our evalutations.
      * @param k the initial size of our field of view.
-     * @param delta our factor of incrementation for our field of view. 
+     * @param delta our factor of incrementation for our field of view.
      */
     public BeamSearchPlanner(Map<Variable, Object> initialState, Set<Action> actions, Goal goal, Heuristic heuristic, int k, int delta) {
-        this.initialState = initialState;
-        this.actions = actions;
-        this.goal = goal;
-        this.heuristic = heuristic;
-        this.exploredNodes = 0;
+        super(initialState, actions, goal, heuristic);
+        this.k = k;
+        this.delta = delta;
+    }
+
+    public BeamSearchPlanner(Map<Variable, Object> initialState, ActionGetter actions, Goal goal, Heuristic heuristic, int k, int delta) {
+        super(initialState, actions, goal, heuristic);
         this.k = k;
         this.delta = delta;
     }
@@ -90,7 +67,7 @@ public class BeamSearchPlanner implements Planner {
 
         DistanceState first = new DistanceState(this.initialState, (float) this.heuristic.estimate(this.initialState));
         Map<Map<Variable, Object>, DistanceState> valueMap = new HashMap<>();
-        
+
         PriorityQueueHeap<DistanceState> value = new PriorityQueueHeap<>(this.k);
         valueMap.put(this.initialState, first);
         value.add(first);
@@ -113,7 +90,7 @@ public class BeamSearchPlanner implements Planner {
 
                 this.k += this.delta;
                 value = new PriorityQueueHeap<>(this.k);
-                
+
                 valueMap.put(this.initialState, first);
                 value.add(first);
 
@@ -127,24 +104,23 @@ public class BeamSearchPlanner implements Planner {
             if(this.goal.isSatisfiedBy(instantiation))
                 return getBFSPlan(father, plan, instantiation);
 
-            for(Action a: this.actions) {
-                if(a.isApplicable(instantiation)) {
-                    Map<Variable, Object> next = a.successor(instantiation);
+            for(Action a: this.actions.getActions(instantiation)) {
+
+                Map<Variable, Object> next = a.successor(instantiation);
 
 
-                    if(distanceMap.keySet().contains(next) && (distanceMap.get(next) > distanceMap.get(instantiation) + a.getCost())) {
-                        value.remove(valueMap.get(next));
-                        valueMap.remove(next);
-                        distanceMap.remove(next);
-                    }
-                    if(!distanceMap.keySet().contains(next)) {
-                        distanceMap.put(next, distanceMap.get(instantiation) + a.getCost());
-                        DistanceState newNext = new DistanceState(next, distanceMap.get(next) + this.heuristic.estimate(next));
-                        valueMap.put(next, newNext);
-                        value.add(newNext);
-                        father.put(next, instantiation);
-                        plan.put(next, a);
-                    }
+                if(distanceMap.keySet().contains(next) && (distanceMap.get(next) > distanceMap.get(instantiation) + a.getCost())) {
+                    value.remove(valueMap.get(next));
+                    valueMap.remove(next);
+                    distanceMap.remove(next);
+                }
+                if(!distanceMap.keySet().contains(next)) {
+                    distanceMap.put(next, distanceMap.get(instantiation) + a.getCost());
+                    DistanceState newNext = new DistanceState(next, distanceMap.get(next) + this.heuristic.estimate(next));
+                    valueMap.put(next, newNext);
+                    value.add(newNext);
+                    father.put(next, instantiation);
+                    plan.put(next, a);
                 }
             }
         }
@@ -152,50 +128,4 @@ public class BeamSearchPlanner implements Planner {
         return null;
     }
 
-    /**
-     * Private method used to rebuild the previously found shortest path from our 
-     * initial state to a state satisfying our goal.
-     * @param father a Map linking a state as key to another state which would be the state that lead to the key state via an action.
-     * @param plan a Map linking a state as key to the last action that lead to it.
-     * @param goal goal is a state satisfying our goal and from which we will start to rebuild the list of action that lead to it.
-     * @return one of the shortest (if your heuristic is admissible) path from our starting point to a state satisfying our goal.
-     */
-    private List<Action> getBFSPlan(Map<Map<Variable, Object>,Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan, Map<Variable, Object> goal) {
-        LinkedList<Action> bfs_plan = new LinkedList<>();
-        while(goal != null && goal!=this.initialState) {
-            bfs_plan.add(plan.get(goal));
-            goal = father.get(goal);
-        }
-
-        Collections.reverse(bfs_plan);
-        return bfs_plan;
-    }
-
-    @Override
-    public Map<Variable, Object> getInitialState() {
-        return this.initialState;
-    }
-
-    @Override
-    public Set<Action> getActions() {
-        return this.actions;
-    }
-
-    @Override
-    public int getExploredNode() {
-        return this.exploredNodes;
-    }
-
-    @Override
-    public Goal getGoal() {
-        return this.goal;
-    }
-
-    /**
-     * Returns the heuristic used by this object.
-     * @return an heuristic.
-     */
-    public Heuristic getHeuristic() {
-        return this.heuristic;
-    }
 }

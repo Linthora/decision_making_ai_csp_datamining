@@ -1,4 +1,18 @@
-opti:
-  -PriorityQueue for distances (et value aussi peut-être) (Dijkstra && AStart)
-  -HashSet -> maybe to TreeSet (probably not necessary as the teacher said.
-  -Set closed ( & opens maybe) -> Object State(Map) to String ?
+Pour rendu fil rouge:
+  - test unitaires pour tout
+  - héritage pour opti tout les planner: DONE
+  - Améliorer relation entre AStar et BeamSearch
+  - Ajouter HeuristicVector et HVectorEvalutation
+  - ajouter les autres planner 
+  - faire des évaluations avec graphes et tout 
+
+CSP : 
+  -tests supplémentaires pour MACSolverHeuristic ?
+  -tests supp en général ?
+
+DATAMINING:
+  -tests supplémentaires pour tout ?
+  -algo en plus ?
+
+TODO:
+  
