@@ -53,7 +53,13 @@ public class Apriori extends AbstractItemsetMiner {
      * 
      * @param s1 the first SortedSet.
      * @param s2 the second SortedSet.
-     * @return a SortedSet of items which is the union of the first and the last item of the second.
+     *
+     * require:
+     * - both sets have the same size k
+     * - both sets have the same k - 1 first items
+     * - the two sets have different k items
+
+     * @return a SortedSet of items which is the union of the first SortedSet and the last item of the second.
      */
     public static SortedSet<BooleanVariable> combine(SortedSet<BooleanVariable> s1, SortedSet<BooleanVariable> s2) {
         
@@ -68,6 +74,14 @@ public class Apriori extends AbstractItemsetMiner {
         return res; 
     }
     
+     /**
+     * 
+     * @param items the set of items to use of size k.
+     * @param frequentsItems the set of frequent items to use represent the frequent
+     * size k - 1
+     * @return a Boolean which is true if all the subsets obtained by deleting exactly one element
+     * from the set of items are contained in the collection
+     */
 
     public static boolean allSubsetsFrequent(Set<BooleanVariable> items, Collection<SortedSet<BooleanVariable>> frequentsItems) {
         SortedSet<BooleanVariable> tempo = new TreeSet<>(COMPARATOR);
@@ -80,6 +94,12 @@ public class Apriori extends AbstractItemsetMiner {
         }
         return true;
     }
+
+    /**
+     * 
+     * @param minFreq the minimum frequency of the itemsets to extract.
+     * @return a Set of all the frequent itemsets of size k+1 which are contained in the database.
+     */
 
     @Override
     public Set<Itemset> extract(float minFreq) {
