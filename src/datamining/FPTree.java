@@ -2,7 +2,6 @@ package datamining;
 
 import java.util.*;
 
-import dataminingtests.Item;
 import representation.*;
 
 // needs to be tested
