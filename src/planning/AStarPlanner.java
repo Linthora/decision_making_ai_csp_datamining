@@ -14,7 +14,7 @@ import representation.Variable;
  * Worst-case complexity: O( b^(d) )
  * for graphs with a branching factor of b and a depth of d
  */
-public class AStarPlanner extends BFSPlanner implements Planner {
+public class AStarPlanner extends BFSPlanner {
     /**
      * Given heuristic to use.
      */

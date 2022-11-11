@@ -16,7 +16,7 @@ import representation.Variable;
  * (where V is all the possible node of our graph and E is all the edges of our graph)
  *
  */
-public class DijkstraPlanner extends AbstractPlanner implements Planner {
+public class DijkstraPlanner extends AbstractPlanner {
 
     /**
      * Creates a new planner using Dijkstra algorithm to search a path 

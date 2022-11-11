@@ -1,7 +1,6 @@
 package datamining;
 
-import java.util.*;
-import representation.*;
+import java.util.Set;
 
 public interface ItemsetMiner {
     public BooleanDatabase getDatabase();

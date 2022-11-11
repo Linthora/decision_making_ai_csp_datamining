@@ -23,7 +23,7 @@ import utility.PriorityQueueHeap;
  * It should resemble AStar one's however the fact that we have a given capacity that needs
  * to be incremented if no solutions was found could make it harder to evaluate.
  */
-public class BeamSearchPlanner extends AStarPlanner implements Planner {
+public class BeamSearchPlanner extends AStarPlanner {
 
     /**
      * the initial size of our field of view.

@@ -19,7 +19,7 @@ import representation.Variable;
  * Worst-case complexity: O( b^(d) )
  * for graphs with a branching factor of b and a depth of d
  */
-public class DFSPlanner extends AbstractPlanner implements Planner {
+public class DFSPlanner extends AbstractPlanner {
 
     /**
      * Creates a new planner using DFS algorithm to search a path
