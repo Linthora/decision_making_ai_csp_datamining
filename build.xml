@@ -42,6 +42,14 @@
         </java>
     </target>
 
+    <!-- run benchmark for itemsets miners -->
+    <target name="benchminer" description="execution" depends="compile">
+        <java classname="test.BenchmarkItemsetMiner" fork="false">
+          <arg value="-Xdiags:verbose"/>
+            <classpath refid="projet.classpath"/>
+        </java>
+    </target>
+
     <!-- generates the documentation of the project -->
     <target name="doc">
         <delete dir="${project.doc.dir}"/>

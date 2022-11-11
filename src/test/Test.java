@@ -149,7 +149,7 @@ public class Test {
         ok = ok && new ItemsetMinerTests(database -> new FPGrowth(database)).testExtract();
         System.out.println("[Tests] [FPGrowth::extract] " + (ok ? "passed" : "failed"));
         
-        System.out.println("\n\nhand made benchmark between Apriori and FPGrowth on the same set of tests (repeted 5 times): ");
+        /* System.out.println("\n\nhand made benchmark between Apriori and FPGrowth on the same set of tests (repeted 5 times): ");
 
         long t0 = System.currentTimeMillis();
         for(int i=0; i < 10; ++i) {
@@ -161,7 +161,7 @@ public class Test {
         }
         long t2 = System.currentTimeMillis();
         System.out.println("\ntime taken by Apriori: " + (t1-t0));
-        System.out.println("time taken by FPGrowth: " + (t2-t1));
+        System.out.println("time taken by FPGrowth: " + (t2-t1)); */
 
 
         //System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");
