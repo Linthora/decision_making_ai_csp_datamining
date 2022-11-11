@@ -3,12 +3,28 @@ package csp;
 import representation.*;
 import java.util.*;
 
+/**
+ * A class that implements a backtracking solver.
+ * 
+ * implements {@link csp.AbstractSolver}
+ */
 public class BacktrackSolver extends AbstractSolver {
 
+    /**
+     * Constructor for the BacktrackSolver class.
+     * 
+     * @param variables the set of variables to solve 
+     * @param constraints the set of constraints 
+     */
     public BacktrackSolver(Set<Variable> variables, Set<Constraint> constraints) {
         super(variables, constraints);
     }
 
+    /**
+     * @param i Map of variables and their objects
+     * @param v list of the variable to assign
+     * @return the extending the partial solution, or null
+     */
     private Map<Variable,Object> bt(Map<Variable,Object> i, LinkedList<Variable> v) {
         if(v.isEmpty()) {
             return i;
