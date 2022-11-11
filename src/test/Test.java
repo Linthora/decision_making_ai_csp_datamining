@@ -31,10 +31,14 @@ import csptests.NbConstraintsVariableHeuristicTests;
 import csptests.RandomValueHeuristicTests;
 
 //TP4 imports
+
+import datamining.FPGrowth;
+import datamining.Apriori;
 import dataminingtests.AbstractAssociationRuleMinerTests;
 import dataminingtests.AbstractItemsetMinerTests;
 import dataminingtests.AprioriTests;
 import dataminingtests.BruteForceAssociationRuleMinerTests;
+import dataminingtests.ItemsetMinerTests;
 
 
 
@@ -136,9 +140,31 @@ public class Test {
         ok = ok && AbstractAssociationRuleMinerTests.testConfidence();
         ok = ok && BruteForceAssociationRuleMinerTests.testAllCandidatePremises();
         ok = ok && BruteForceAssociationRuleMinerTests.testExtract();
+        System.out.println(ok ? "All test passed !!!!!! yaaay :-)" : "At least one test failed...KO :'-(");
 
 
-        System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");
+        System.out.println("\n\nEntering bonus FPGrowth ItemsetMiner tests");
+
+        System.out.println("[Tests] [FPGrowth::extract] launched");
+        ok = ok && new ItemsetMinerTests(database -> new FPGrowth(database)).testExtract();
+        System.out.println("[Tests] [FPGrowth::extract] " + (ok ? "passed" : "failed"));
+        
+        System.out.println("\n\nhand made benchmark between Apriori and FPGrowth on the same set of tests (repeted 5 times): ");
+
+        long t0 = System.currentTimeMillis();
+        for(int i=0; i < 10; ++i) {
+            ok = ok && new ItemsetMinerTests(database -> new Apriori(database)).testExtract();
+        }
+        long t1 = System.currentTimeMillis();
+        for(int i=0; i < 10; ++i) {
+            ok = ok && new ItemsetMinerTests(database -> new FPGrowth(database)).testExtract();
+        }
+        long t2 = System.currentTimeMillis();
+        System.out.println("\ntime taken by Apriori: " + (t1-t0));
+        System.out.println("time taken by FPGrowth: " + (t2-t1));
+
+
+        //System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");
         
     }
 }

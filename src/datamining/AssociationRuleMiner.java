@@ -1,7 +1,6 @@
 package datamining;
 
 import java.util.*;
-import representation.*;
 
 public interface AssociationRuleMiner {
     

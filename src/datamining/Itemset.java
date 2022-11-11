@@ -20,4 +20,22 @@ public class Itemset {
     public float getFrequency() {
         return this.freq;
     }
+
+    @Override
+    public String toString() {
+        return "Itemset: min_freq=" + this.freq + ", " + this.items + " ]";
+    }
+
+    @Override
+    public int hashCode() {
+        return this.items.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof Itemset) {
+            return this.items.equals(((Itemset) o).getItems());
+        }
+        return false;
+    }
 }

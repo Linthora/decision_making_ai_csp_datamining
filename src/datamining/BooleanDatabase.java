@@ -26,4 +26,18 @@ public class BooleanDatabase {
     public List<Set<BooleanVariable>> getTransactions() {
         return this.transactions;
     }
+
+    @Override
+    public String toString() {
+        String res ="BooleanDatabase:\nitems:";
+        res += this.items +"\n";
+        res += "transactions: [\n";
+
+        for(Set<BooleanVariable> transaction: this.transactions) {
+            res += transaction +",\n";
+        }
+        res += "];";
+
+        return res;
+    }
 }

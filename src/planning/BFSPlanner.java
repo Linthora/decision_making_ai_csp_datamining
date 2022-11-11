@@ -17,39 +17,22 @@ import representation.Variable;
  * Worst-case complexity: O( b^(d) )
  * for graphs with a branching factor of b and a depth of d 
  */
-public class BFSPlanner implements Planner {
+public class BFSPlanner extends AbstractPlanner {
 
     /**
-     * Our starting point instantiation.
-     */
-    protected Map<Variable, Object> initialState;
-    
-    /**
-     * All the possible action to navigate our graph.
-     */
-    protected Set<Action> actions;
-    
-    /**
-     * Our goal.
-     */
-    protected Goal goal;
-    
-    /**
-     * The number of node we explored after trying to find a solution with this class.
-     */
-    protected int exploredNodes;
-
-    /**
-     * Creates a new planner using BFS algorithm to search a path 
+     * Creates a new planner using BFS algorithm to search a path
      * from given initial state to a state satisfying given goal with given possible actions.
      * @param initialState a state from which we will start to search.
      * @param actions all the actions to navigate from different states.
      * @param goal our goal.
      */
     public BFSPlanner(Map<Variable,Object> initialState, Set<Action> actions, Goal goal) {
-        this.initialState = initialState;
-        this.actions = actions;
-        this.goal = goal;
+        super(initialState, actions, goal);
+        this.exploredNodes = 1;
+    }
+
+    public BFSPlanner(Map<Variable,Object> initialState, ActionGetter actions, Goal goal) {
+        super(initialState, actions, goal);
         this.exploredNodes = 1;
     }
 
@@ -71,18 +54,16 @@ public class BFSPlanner implements Planner {
             this.exploredNodes++;
             Map<Variable, Object> instantiation = open.remove();
             closed.add(instantiation);
-            for(Action a : this.actions) {
-                if(a.isApplicable(instantiation)) {
-                    Map<Variable, Object> next = a.successor(instantiation);
-                    if(!(closed.contains(next)) && !(open.contains(next))) {
-                        father.put(next, instantiation);
-                        plan.put(next, a);
-                        if(this.goal.isSatisfiedBy(next))
-                            return getBFSPlan(father, plan, next);
-                        else
-                            open.add(next);
+            for(Action a : this.actions.getActions(instantiation)) {
+                Map<Variable, Object> next = a.successor(instantiation);
+                if(!(closed.contains(next)) && !(open.contains(next))) {
+                    father.put(next, instantiation);
+                    plan.put(next, a);
+                    if(this.goal.isSatisfiedBy(next))
+                        return getBFSPlan(father, plan, next);
+                    else
+                        open.add(next);
                     }
-                }
             }
         }
         return null;
@@ -96,7 +77,7 @@ public class BFSPlanner implements Planner {
      * @param goal goal is a state satisfying our goal and from which we will start to rebuild the list of action that lead to it.
      * @return one of the shortest list of action (in term of individual action rather than their cost) to take to go from our starting point to a state satisfying our goal.
      */
-    private List<Action> getBFSPlan(Map<Map<Variable, Object>,Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan, Map<Variable, Object> goal) {
+    protected List<Action> getBFSPlan(Map<Map<Variable, Object>,Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan, Map<Variable, Object> goal) {
         LinkedList<Action> bfs_plan = new LinkedList<>();
 
         while(goal != null && goal!=this.initialState) {
@@ -108,23 +89,4 @@ public class BFSPlanner implements Planner {
         return bfs_plan;
     }
 
-    @Override
-    public Map<Variable, Object> getInitialState() {
-        return this.initialState;
-    }
-
-    @Override
-    public Set<Action> getActions() {
-        return actions;
-    }
-
-    @Override
-    public int getExploredNode() {
-        return this.exploredNodes;
-    }
-
-    @Override
-    public Goal getGoal() {
-        return goal;
-    }
 }

@@ -28,6 +28,12 @@ public interface Planner {
     public Set<Action> getActions();
 
     /**
+     * Returns the ActionGetter used by the planner to get all the action possible from one state
+     * @return the ActionGetter.
+     */
+    //    public ActionGetter getActionGetter();
+
+    /**
      * Returns our goal.
      * @return a goal.
      */
