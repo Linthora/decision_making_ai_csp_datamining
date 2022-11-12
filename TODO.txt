@@ -7,12 +7,20 @@ Pour rendu fil rouge:
   - faire des évaluations avec graphes et tout 
 
 CSP : 
-  -tests supplémentaires pour MACSolverHeuristic ?
-  -tests supp en général ?
+	-tests supplémentaires pour MACSolverHeuristic ?
+	-tests supp en général ?
 
-DATAMINING:
-  -tests supplémentaires pour tout ?
-  -algo en plus ?
+DATAMINING: 
+	-algo en plus : Done (FPGrowth)
 
 TODO:
-  
+  DOC CSP: DONE
+  DOC datamining: remains-> [	AssociationRule.java;
+				AssociationRuleMiner.java;
+				AbstractAssociationRuleMiner.java;
+				BruteForceAssociationRuleMiner.java;
+				Test.java (to move to Test pacakge or remove);
+			    ]
+  Make Readme.txt for rendu (tuto and analyse for benchmark)
+  Make rendus 
+  rendre.

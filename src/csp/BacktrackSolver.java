@@ -4,26 +4,30 @@ import representation.*;
 import java.util.*;
 
 /**
- * A class that implements a backtracking solver.
+ * A class to solve a CSP problem with a Backtraking algorithm.
  * 
- * implements {@link csp.AbstractSolver}
+ * Extends {@link csp.AbstractSolver}
  */
 public class BacktrackSolver extends AbstractSolver {
 
     /**
-     * Constructor for the BacktrackSolver class.
-     * 
-     * @param variables the set of variables to solve 
-     * @param constraints the set of constraints 
+     * Creates a new solver using a backtracking algorithm to find a solution to the given problem.
+     *
+     * @param variables the variables of our problem.
+     * @param constraints the set of constraints of ou problem.
      */
     public BacktrackSolver(Set<Variable> variables, Set<Constraint> constraints) {
         super(variables, constraints);
     }
 
     /**
-     * @param i Map of variables and their objects
-     * @param v list of the variable to assign
-     * @return the extending the partial solution, or null
+     * Private method running the backtraking.
+     * 
+     * Worst case complexity: O(|domain of variable|^|variables|) 
+     * 
+     * @param i partial instantiation representing our built solution until now.
+     * @param v a list of the remaining variables that we need to asign a value with.
+     * @return the extending the partial solution if consistent, null otherwise.
      */
     private Map<Variable,Object> bt(Map<Variable,Object> i, LinkedList<Variable> v) {
         if(v.isEmpty()) {
@@ -46,5 +50,10 @@ public class BacktrackSolver extends AbstractSolver {
     @Override
     public Map<Variable, Object> solve() {
         return bt(new HashMap<>(), new LinkedList<>(this.variables));
+    }
+
+    @Override
+    public String toString() {
+        return "BacktrackSolver" + super.toString();
     }
 }

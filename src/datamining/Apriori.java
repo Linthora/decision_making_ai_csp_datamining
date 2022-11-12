@@ -4,35 +4,29 @@ import java.util.*;
 import representation.*;
 
 /**
- * A class which represents extractors working on the principle of the "apriori" algorithm.
+ * A class which represents an itemset miner using Apriori algorithm.
  * extends {@link datamining.AbstractItemsetMiner}.
  *
- * The "apriori" algorithm is a method for finding frequent itemsets in a database.
+ * Apriori algorithm is a method for finding frequent itemsets in a database.
  * It is based on the principle that if an itemset is frequent, then all its subsets are frequent.
  * It is a divide and conquer algorithm, which is composed of two phases:
  * - the first phase generates all the frequent itemsets of size 1, then all the frequent itemsets of size 2, and so on.
  * - the second phase generates all the frequent itemsets of size k+1 from the frequent itemsets of size k.
- *
- * The algorithm is based on the following two properties:
- * - If an itemset is frequent, then all its subsets of size k-1 are frequent.
- * - If an itemset is not frequent, then none of its supersets of size k+1 are frequent.
- *
- * For each pair of itemsets it combines them to give rise to the itemset of their union.
  */
-
 public class Apriori extends AbstractItemsetMiner {
     
     /**
      * Creates a new Apriori object.
-     * @param database the database to use herited from {@link datamining.AbstractItemsetMiner}.
+     * @param database the database on which we mine.
      */
     public Apriori(BooleanDatabase base) {
         super(base);
     }
     
     /**
-     * @param minFreq the minimum frequency of the itemsets to extract.
-     * @return the set of all singleton items (with their frequency) which frequently in the database is at least equal to the given one.
+     * Retius the set of frequent itemsets of size 1.
+     * @param minFreq the minimum frequency allowed.
+     * @return the set of all singleton items (as itemset) whith a frequency greater or equal to given frequency.
      */
     public Set<Itemset> frequentSingletons(float minFreq) {
         Set<Itemset> okSingleton = new HashSet<>();
@@ -50,16 +44,10 @@ public class Apriori extends AbstractItemsetMiner {
     }
 
     /**
-     * 
-     * @param s1 the first SortedSet.
-     * @param s2 the second SortedSet.
-     *
-     * require:
-     * - both sets have the same size k
-     * - both sets have the same k - 1 first items
-     * - the two sets have different k items
-
-     * @return a SortedSet of items which is the union of the first SortedSet and the last item of the second.
+     * Combine two itemsets to create a new one if they are compatible.
+     * @param s1 the first set of items.
+     * @param s2 the second set of items.
+     * @return a SortedSet of items which is the union of the first SortedSet and the last item of the second, or null if the two sets are not compatible.
      */
     public static SortedSet<BooleanVariable> combine(SortedSet<BooleanVariable> s1, SortedSet<BooleanVariable> s2) {
         
@@ -75,14 +63,11 @@ public class Apriori extends AbstractItemsetMiner {
     }
     
      /**
-     * 
-     * @param items the set of items to use of size k.
-     * @param frequentsItems the set of frequent items to use represent the frequent
-     * size k - 1
-     * @return a Boolean which is true if all the subsets obtained by deleting exactly one element
-     * from the set of items are contained in the collection
+     * Method to tell us if a given set of items of size k will be frequent based on the frequent itemsets of size k-1.
+     * @param items a set of items to use of size k.
+     * @param frequentsItems the set of frequent set of items of size k-1.
+     * @return true if the set of items is frequent, false otherwise.
      */
-
     public static boolean allSubsetsFrequent(Set<BooleanVariable> items, Collection<SortedSet<BooleanVariable>> frequentsItems) {
         SortedSet<BooleanVariable> tempo = new TreeSet<>(COMPARATOR);
         tempo.addAll(items);
@@ -94,12 +79,6 @@ public class Apriori extends AbstractItemsetMiner {
         }
         return true;
     }
-
-    /**
-     * 
-     * @param minFreq the minimum frequency of the itemsets to extract.
-     * @return a Set of all the frequent itemsets of size k+1 which are contained in the database.
-     */
 
     @Override
     public Set<Itemset> extract(float minFreq) {
@@ -137,5 +116,10 @@ public class Apriori extends AbstractItemsetMiner {
         }
 
         return res;
+    }
+
+    @Override
+    public String toString() {
+        return "Apriori" + super.toString();
     }
 }
