@@ -4,10 +4,26 @@ package csp;
 import java.util.*;
 import representation.*;
 
+/**
+ * A VariableHeuristic for some CSP solvers based on the number of constraint aiming a variable.
+ */
 public class NbConstraintsVariableHeuristic implements VariableHeuristic {
+    
+    /**
+     * The constraints of our CSP.
+     */
     protected Set<Constraint> constraints;
+
+    /**
+     * true if we want to chose first the most targeted variable, false for the least one.
+     */
     protected boolean more;
     
+    /**
+     * Creates a VariableHeuristic based on the number of constraint targetting our variables.
+     * @param constraints the constraints of our CSP.
+     * @param more true if we want to chose first the most targeted variable, false for the least one.
+     */
     public NbConstraintsVariableHeuristic(Set<Constraint> constraints, boolean more) {
         this.constraints = constraints;
         this.more = more;
@@ -38,5 +54,10 @@ public class NbConstraintsVariableHeuristic implements VariableHeuristic {
         }
 
         return this.more ? max : min;
+    }
+
+    @Override
+    public String toString() {
+        return "NbConstraintsVariableHeuristic [more=" + more + "]";
     }
 }
