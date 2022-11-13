@@ -39,4 +39,9 @@ public class DifferenceConstraint implements Constraint {
         return !( instanciation.get(this.v1).equals( instanciation.get(this.v2) ));
     }
 
+    @Override
+    public String toString() {
+        return "DifferenceConstraint: [v1: " + this.v1.getName() + ", v2: " + this.v2.getName() + "]";
+        //return "DifferenceConstraint: [v1: " + this.v1 + ", v2: " + this.v2 + "]";
+    }
 }

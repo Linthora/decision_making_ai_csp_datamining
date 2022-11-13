@@ -42,4 +42,9 @@ public class UnaryConstraint implements Constraint {
         return this.s.contains( instanciation.get(this.v) );
     }
 
+    @Override
+    public String toString() {
+        return "UnaryConstraint: [v: " + this.v.getName() + ", s: " + this.s + "]";
+    }
+
 }

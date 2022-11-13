@@ -33,15 +33,15 @@ public class TestPriorityQueueHeap {
 
         System.out.println("[Tests] [PriorityQueueHeap::poll] launched");
         ok = ok && testPoll();
-        System.out.println("[Tests] [PriorityQueueHeap::poll]" + (ok ? "passed" : "failed"));
+        System.out.println("[Tests] [PriorityQueueHeap::poll] " + (ok ? "passed" : "failed"));
 
         System.out.println("[Tests] [PriorityQueueHeap::peek] launched");
         ok = ok && testPeek();
-        System.out.println("[Tests] [PriorityQueueHeap::peek]" + (ok ? "passed" : "failed"));
+        System.out.println("[Tests] [PriorityQueueHeap::peek] " + (ok ? "passed" : "failed"));
 
         System.out.println("[Tests] [PriorityQueueHeap::add] launched");
         ok = ok && testAdd();
-        System.out.println("[Tests] [PriorityQueueHeap::add]" + (ok ? "passed" : "failed"));
+        System.out.println("[Tests] [PriorityQueueHeap::add] " + (ok ? "passed" : "failed"));
         return ok;
     }
 

@@ -17,4 +17,9 @@ public class BooleanVariable extends Variable {
         this.domain.add(true);
         this.domain.add(false);
     }
+
+    @Override
+    public String toString() {
+        return "BooleanVariable: [name: " + this.name + ", domain: " + this.domain + "]";
+    }
 }

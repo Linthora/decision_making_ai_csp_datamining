@@ -148,6 +148,10 @@ public class Test {
         System.out.println("[Tests] [FPGrowth::extract] launched");
         ok = ok && new ItemsetMinerTests(database -> new FPGrowth(database)).testExtract();
         System.out.println("[Tests] [FPGrowth::extract] " + (ok ? "passed" : "failed"));
+        ok = ok && TestFPGrowth.test();
+        System.out.println(ok ? "FPGrowth working!!!" : "At least one test failed for our FPGrowth implementatio.. :'-( (or earlier)");
+
+
         
         /* System.out.println("\n\nhand made benchmark between Apriori and FPGrowth on the same set of tests (repeted 5 times): ");
 

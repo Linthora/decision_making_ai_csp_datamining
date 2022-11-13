@@ -51,5 +51,9 @@ public class Implication implements Constraint {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Implication: [v1: " + this.v1.getName() + ", s1: " + this.s1 + "=> v2: " + this.v2.getName() + ", s2: " + this.s2 + "]";
+    }
 
 }

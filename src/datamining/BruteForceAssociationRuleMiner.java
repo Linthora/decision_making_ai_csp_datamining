@@ -2,21 +2,15 @@ package datamining;
 
 import java.util.*;
 import representation.*;
+
 /**
- * A class which represents the implementation of the "brute force" algorithm.
-* extends {@link datamining.AbstractItemsetMiner}.
-*
-* The "brute force" algorithm is a method for finding frequent itemsets in a database.
-* It is based on the principle that if an itemset is frequent, then all its subsets are frequent.
-* It is a divide and conquer algorithm, which is composed of two phases:
-* - the first phase generates all the frequent itemsets of size 1, then all the frequent itemsets of size 2, and so on.
-* - the second phase generates all the frequent itemsets of size k+1 from the frequent itemsets of size k.
-*
+ * A class that represents an association rule miner using the brute force algorithm.
+ * extends {@link datamining.AbstractItemsetMiner}. 
  */
 public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner {
 
     /**
-     * Creates a new BruteForceAssociationRuleMiner object.
+     * Creates a new BruteForceAssociationRuleMiner with given database.
      * @param database the database to use herited from {@link datamining.AbstractItemsetMiner}.
      */
     public BruteForceAssociationRuleMiner(BooleanDatabase database) {
@@ -24,9 +18,9 @@ public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner
     }
     
     /**
-     * Static method
-     * @param items the set of items to consider.
-     * @return the set of all subsets of the given set except the empty set and itself.
+     * Static method that returns all the possible premises of a given set of variables.
+     * @param items the set of items.
+     * @return all the possible premises of a given set of variables.
      */
     public static Set<Set<BooleanVariable>> allCandidatePremises(Set<BooleanVariable> items) {
         Set<Set<BooleanVariable>> res = new HashSet<>();
@@ -56,17 +50,14 @@ public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner
         return res;
     }
 
-    /**
-     * @param minFReq the minimum frequency of the rules to extract.
-     * @param minConfidence the minimum confidence of the rules to extract. 
-     * @return the set of all association rules (with their confidence) which frequently in the database is at least equal to the given one.
-     */
     @Override
     public Set<AssociationRule> extract(float minFreq, float minConfidence) {
-        
+
         ItemsetMiner setMiner = new Apriori(this.database);
-        Set<Itemset> frequentItemset = setMiner.extract(minFreq);
+        //ItemsetMiner setMiner = new FPGrowth(this.database);
         
+        Set<Itemset> frequentItemset = setMiner.extract(minFreq);
+
         Set<AssociationRule> res = new HashSet<>();
 
         for(Itemset x: frequentItemset) {

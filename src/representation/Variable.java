@@ -70,5 +70,7 @@ public class Variable {
     }
 
     @Override
-    public String toString() { return this.name;}
+    public String toString() { 
+        return "Variable: [name: " + this.name + ", Domain: " + this.domain + "]";
+    }
 }

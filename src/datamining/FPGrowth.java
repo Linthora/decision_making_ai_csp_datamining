@@ -43,9 +43,10 @@ public class FPGrowth extends AbstractItemsetMiner {
 
     @Override
     public Set<Itemset> extract(float frequency) {
-        int nb_transaction = this.base.getTransactions().size();
-        
-        int min_sup = (int) (frequency*nb_transaction);
+        int nb_transaction = this.base.getTransactions().size();        
+
+        // we have to decrement the min_sup because of the rounding error.
+        int min_sup = (int) (frequency*(float)nb_transaction) -1;
        
         PriorityQueue<Itemset> order = frequentSingletons(frequency);
         FPTree tree = new FPTree();
@@ -53,12 +54,18 @@ public class FPGrowth extends AbstractItemsetMiner {
         tree.buildTree(this.base.getTransactions(), order);
 
         Set<Itemset> itemsets = new HashSet<>();
+
         for(Set<BooleanVariable> setBV: tree.extract(min_sup)) {
-            itemsets.add(new Itemset(setBV, frequency(setBV)));
+            float newFreq = frequency(setBV);
+            if(newFreq >= frequency) {
+                itemsets.add(new Itemset(setBV, newFreq));
+            }
         }
 
         itemsets.addAll(order);
         
+        //System.out.println(tree);
+        //System.out.println("min_sup: " + min_sup);
         return itemsets;
     }
 }
