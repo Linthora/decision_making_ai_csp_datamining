@@ -33,7 +33,7 @@ import csptests.RandomValueHeuristicTests;
 //TP4 imports
 
 import datamining.FPGrowth;
-import datamining.Apriori;
+//import datamining.Apriori;
 import dataminingtests.AbstractAssociationRuleMinerTests;
 import dataminingtests.AbstractItemsetMinerTests;
 import dataminingtests.AprioriTests;
@@ -148,6 +148,10 @@ public class Test {
         System.out.println("[Tests] [FPGrowth::extract] launched");
         ok = ok && new ItemsetMinerTests(database -> new FPGrowth(database)).testExtract();
         System.out.println("[Tests] [FPGrowth::extract] " + (ok ? "passed" : "failed"));
+        ok = ok && TestFPGrowth.test();
+        System.out.println(ok ? "FPGrowth working!!!" : "At least one test failed for our FPGrowth implementatio.. :'-( (or earlier)");
+
+
         
         /* System.out.println("\n\nhand made benchmark between Apriori and FPGrowth on the same set of tests (repeted 5 times): ");
 
@@ -162,7 +166,6 @@ public class Test {
         long t2 = System.currentTimeMillis();
         System.out.println("\ntime taken by Apriori: " + (t1-t0));
         System.out.println("time taken by FPGrowth: " + (t2-t1)); */
-
 
         //System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");
         

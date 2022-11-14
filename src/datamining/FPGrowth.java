@@ -11,6 +11,11 @@ import representation.*;
  * It is based on the principle that if an itemset is frequent, then all its subsets are frequent.
  * It works by building a tree using frequent items as nodes representing the database by reading the transactions only once.
  * Then it uses the tree to find all the frequent itemsets by traversing the tree with a DFS like exploration.
+ * 
+ * This implementation is far from being optimal and is only here to show the principle of the algorithm.
+ * We used the following paper and article to implement it:
+ *  - http://www.philippe-fournier-viger.com/spmf/fpgrowth_04.pdf (scientific paper on FPGrowth)
+ *  - https://www.softwaretestinghelp.com/fp-growth-algorithm-data-mining/ (article describing the functioning of this algorithm and showing an example without any provided code)
  */
 public class FPGrowth extends AbstractItemsetMiner {
 
@@ -43,9 +48,10 @@ public class FPGrowth extends AbstractItemsetMiner {
 
     @Override
     public Set<Itemset> extract(float frequency) {
-        int nb_transaction = this.base.getTransactions().size();
-        
-        int min_sup = (int) (frequency*nb_transaction);
+        int nb_transaction = this.base.getTransactions().size();        
+
+        // we have to decrement the min_sup because of the rounding error.
+        int min_sup = (int) (frequency*(float)nb_transaction) -1;
        
         PriorityQueue<Itemset> order = frequentSingletons(frequency);
         FPTree tree = new FPTree();
@@ -53,12 +59,18 @@ public class FPGrowth extends AbstractItemsetMiner {
         tree.buildTree(this.base.getTransactions(), order);
 
         Set<Itemset> itemsets = new HashSet<>();
+
         for(Set<BooleanVariable> setBV: tree.extract(min_sup)) {
-            itemsets.add(new Itemset(setBV, frequency(setBV)));
+            float newFreq = frequency(setBV);
+            if(newFreq >= frequency) {
+                itemsets.add(new Itemset(setBV, newFreq));
+            }
         }
 
         itemsets.addAll(order);
         
+        //System.out.println(tree);
+        //System.out.println("min_sup: " + min_sup);
         return itemsets;
     }
 }

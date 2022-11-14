@@ -76,11 +76,13 @@ public class BenchmarkItemsetMiner {
             long t1;
             long t2;
             
+            System.gc();
             t1 = System.currentTimeMillis();
             apriori.extract(frequency);
             t2 = System.currentTimeMillis();
             aprioriTimes.add(t2 - t1);
             
+            System.gc();
             t1 = System.currentTimeMillis();
             fpgrowth.extract(frequency);
             t2 = System.currentTimeMillis();
@@ -122,11 +124,13 @@ public class BenchmarkItemsetMiner {
             long t1;
             long t2;
             
+            System.gc();
             t1 = System.currentTimeMillis();
             apriori.extract(frequency);
             t2 = System.currentTimeMillis();
             aprioriTimes.add(t2 - t1);
             
+            System.gc();
             t1 = System.currentTimeMillis();
             fpgrowth.extract(frequency);
             t2 = System.currentTimeMillis();
@@ -209,11 +213,13 @@ public class BenchmarkItemsetMiner {
             long t1;
             long t2;
             
+            System.gc();
             t1 = System.currentTimeMillis();
             apriori.extract(frequency);
             t2 = System.currentTimeMillis();
             aprioriTimes.add(t2 - t1);
             
+            System.gc();
             t1 = System.currentTimeMillis();
             fpgrowth.extract(frequency);
             t2 = System.currentTimeMillis();
@@ -258,23 +264,28 @@ public class BenchmarkItemsetMiner {
      */
     public static void main(String[] args) {
 
+        System.out.println("Starting benchmarks...\n(0/9)");
         Map<Boolean, List<Long>> res;
         res = benchmarkNbVariable(8, 0.1f);
         toCSV(res.get(true), res.get(false), "benchmarkNbVariable_0-1freq.csv");
 
+        System.out.println("(1/9)");
         res = benchmarkNbVariable(20, 0.5f);
         toCSV(res.get(true), res.get(false), "benchmarkNbVariable_0-5freq.csv");
 
+        System.out.println("(2/9)");
         res = benchmarkNbVariable(20, 0.9f);
         toCSV(res.get(true), res.get(false), "benchmarkNbVariable_0-9freq.csv");
 
-        
+        System.out.println("(3/9)");
         res = benchmarkNbTransaction(150, 0.1f);
         toCSV(res.get(true), res.get(false), "benchmarkNbTransaction_0-1freq.csv");
 
+        System.out.println("(4/9)");
         res = benchmarkNbTransaction(1000, 0.5f);
         toCSV(res.get(true), res.get(false), "benchmarkNbTransaction_0-5freq.csv");
 
+        System.out.println("(5/9)");
         res = benchmarkNbTransaction(1000, 0.9f);
         toCSV(res.get(true), res.get(false), "benchmarkNbTransaction_0-9freq.csv");
 
@@ -287,15 +298,18 @@ public class BenchmarkItemsetMiner {
         //res = benchmarkNbItemsPerTransaction(20, 0.9f);
         //toCSV(res.get(true), res.get(false), "benchmarkNbItemsPerTransaction_0-9freq.csv");
 
-        
+        System.out.println("(6/9)");
         res = benchmarkAll(10, 0.1f);
         toCSV(res.get(true), res.get(false), "benchmarkAll_0-1freq.csv");
 
+        System.out.println("(7/9)");
         res = benchmarkAll(150, 0.5f);
         toCSV(res.get(true), res.get(false), "benchmarkAll_0-5freq.csv");
 
+        System.out.println("(8/9)");
         res = benchmarkAll(500, 0.9f);
         toCSV(res.get(true), res.get(false), "benchmarkAll_0-9freq.csv");
+        System.out.println("(9/9)\nBenchmarks finished.");
 
     }
 }

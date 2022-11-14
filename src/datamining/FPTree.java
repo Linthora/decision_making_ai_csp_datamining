@@ -93,4 +93,9 @@ public class FPTree {
         return res;
     }
 
+    @Override
+    public String toString() {
+        return this.root.toString();
+    }
+
 }
