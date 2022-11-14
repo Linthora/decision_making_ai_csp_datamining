@@ -11,6 +11,11 @@ import representation.*;
  * It is based on the principle that if an itemset is frequent, then all its subsets are frequent.
  * It works by building a tree using frequent items as nodes representing the database by reading the transactions only once.
  * Then it uses the tree to find all the frequent itemsets by traversing the tree with a DFS like exploration.
+ * 
+ * This implementation is far from being optimal and is only here to show the principle of the algorithm.
+ * We used the following paper and article to implement it:
+ *  - http://www.philippe-fournier-viger.com/spmf/fpgrowth_04.pdf (scientific paper on FPGrowth)
+ *  - https://www.softwaretestinghelp.com/fp-growth-algorithm-data-mining/ (article describing the functioning of this algorithm and showing an example without any provided code)
  */
 public class FPGrowth extends AbstractItemsetMiner {
 

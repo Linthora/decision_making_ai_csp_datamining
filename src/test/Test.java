@@ -33,7 +33,7 @@ import csptests.RandomValueHeuristicTests;
 //TP4 imports
 
 import datamining.FPGrowth;
-import datamining.Apriori;
+//import datamining.Apriori;
 import dataminingtests.AbstractAssociationRuleMinerTests;
 import dataminingtests.AbstractItemsetMinerTests;
 import dataminingtests.AprioriTests;
@@ -166,7 +166,6 @@ public class Test {
         long t2 = System.currentTimeMillis();
         System.out.println("\ntime taken by Apriori: " + (t1-t0));
         System.out.println("time taken by FPGrowth: " + (t2-t1)); */
-
 
         //System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");
         
