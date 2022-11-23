@@ -42,6 +42,14 @@
         </java>
     </target>
 
+    <!-- run example for part 1 of the fil rouge -->
+    <target name="filRouge1" description="execution" depends="compile">
+        <java classname="blocksworld.ExampleRegular" fork="false">
+            <arg value="-Xdiags:verbose"/>
+            <classpath refid="projet.classpath"/>
+        </java>
+    </target>
+
     <!-- run benchmark for itemsets miners -->
     <target name="benchminer" description="execution" depends="compile">
         <java classname="test.BenchmarkItemsetMiner" fork="false">

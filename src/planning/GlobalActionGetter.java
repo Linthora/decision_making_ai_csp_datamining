@@ -21,8 +21,8 @@ public class GlobalActionGetter implements ActionGetter {
         return res;
     }
 
-    @Override
-    public Set<Action> getAll() {
-        return this.actions;
-    }
+    //@Override
+    //public Set<Action> getAll() {
+    //    return this.actions;
+    //}
 }

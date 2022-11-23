@@ -56,4 +56,13 @@ public class Implication implements Constraint {
         return "Implication: [v1: " + this.v1.getName() + ", s1: " + this.s1 + "=> v2: " + this.v2.getName() + ", s2: " + this.s2 + "]";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof Implication) {
+            Implication i = (Implication) o;
+            return this.v1.equals(i.v1) && this.v2.equals(i.v2) && this.s1.equals(i.s1) && this.s2.equals(i.s2);
+        }
+        return false;
+    }
+
 }

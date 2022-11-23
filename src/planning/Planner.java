@@ -25,7 +25,7 @@ public interface Planner {
      * Returns all the actions that can be used to move from one state to another.
      * @return a set containing all the possible actions.
      */
-    public Set<Action> getActions();
+    //public Set<Action> getActions();
 
     /**
      * Returns the ActionGetter used by the planner to get all the action possible from one state
