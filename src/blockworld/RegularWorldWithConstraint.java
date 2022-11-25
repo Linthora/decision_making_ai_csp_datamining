@@ -1,4 +1,4 @@
-package blocksworld;
+package blockworld;
 
 import representation.*;
 import java.util.*;

@@ -26,6 +26,14 @@ public class BasicGoal implements Goal {
     public boolean isSatisfiedBy(Map<Variable, Object> state) {
         return state.entrySet().containsAll(this.condition.entrySet());
     }
+
+    /**
+     * Returns the condition of this goal.
+     * @return the condition of this goal.
+     */
+    public Map<Variable, Object> getCondition() {
+        return this.condition;
+    }
 }
 
 
