@@ -32,8 +32,6 @@ public class Apriori extends AbstractItemsetMiner {
         Set<Itemset> okSingleton = new HashSet<>();
 
         for(BooleanVariable v: this.base.getItems()) {
-            //Set<BooleanVariable> singleVar = new HashSet<>();// Set.of(v);
-            //singleVar.add(v);
             float vfreq = this.frequency(Set.of(v));
             if(vfreq >= minFreq) {
                 okSingleton.add(new Itemset(Set.of(v), vfreq));
@@ -97,8 +95,8 @@ public class Apriori extends AbstractItemsetMiner {
 
             List<SortedSet<BooleanVariable>> newHeight = new LinkedList<>();
             
-            for(int i=0; i < frequentSetsK.size(); ++i) { //SortedSet<BooleanVariable> s1: frequentSetsK) {
-                for(int j=i+1; j < frequentSetsK.size(); ++j) { //SortedSet<BooleanVariable> s2: frequentSetsK) {
+            for(int i=0; i < frequentSetsK.size(); ++i) {
+                for(int j=i+1; j < frequentSetsK.size(); ++j) {
 
                     SortedSet<BooleanVariable> newCombination = Apriori.combine(frequentSetsK.get(i), frequentSetsK.get(j));
                     

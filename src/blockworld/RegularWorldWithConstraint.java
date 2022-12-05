@@ -13,11 +13,7 @@ public class RegularWorldWithConstraint extends WorldWithConstraint {
         this.regularConstraints = new HashSet<>();
 
         Set<Object> domPile = new HashSet<>(this.piles.keySet());
-        //System.out.println("domPile: " + domPile);
-        //for(Integer i: this.piles.keySet()) {
-        //    domPile.add(i);
-        //}
-
+        
         for(Integer i : this.blocksOn.keySet()) {
             Variable vi = this.blocksOn.get(i);
             for(Object o: vi.getDomain()) {
@@ -55,7 +51,6 @@ public class RegularWorldWithConstraint extends WorldWithConstraint {
 
     public boolean isRegular(Map<Variable, Object> state) {
         if(!this.isConsistent(state)) {
-            System.out.println("Given state is not consistent thus not regular");
             return false;
         }
 

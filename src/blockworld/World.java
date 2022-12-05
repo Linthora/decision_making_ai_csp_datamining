@@ -7,8 +7,8 @@ public class World {
     protected int nbBlocs, nbPiles;
 
     protected Map<Integer, Variable> blocksOn;
-    protected Map<Integer, Variable> blocksFixed;
-    protected Map<Integer, Variable> piles;
+    protected Map<Integer, BooleanVariable> blocksFixed;
+    protected Map<Integer, BooleanVariable> piles;
 
 
     public World(int nbBlocs, int nbPiles) {
@@ -51,11 +51,11 @@ public class World {
         return this.blocksOn;
     }
 
-    protected Map<Integer, Variable> getBlocksFixed() {
+    protected Map<Integer, BooleanVariable> getBlocksFixed() {
         return this.blocksFixed;
     }
 
-    protected Map<Integer, Variable> getPiles() {
+    protected Map<Integer, BooleanVariable> getPiles() {
         return this.piles;
     }
 

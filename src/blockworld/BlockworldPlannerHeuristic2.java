@@ -54,12 +54,9 @@ public class BlockworldPlannerHeuristic2 implements Heuristic {
         this.world = world;
     }
 
-    // Using missplaced blocks as heuristic and count all the blocks on it as missplaced
-    // proof :
     @Override
     public float estimate(Map<Variable, Object> state) {
         // We start by building the different piles
-
         // to do it in a more efficient and elegant way, we will use a map of CustomCell to build the stacks
 
         Map<Integer, CustomCell> cells = new HashMap<>();

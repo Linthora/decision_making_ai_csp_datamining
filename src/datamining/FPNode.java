@@ -141,14 +141,11 @@ public class FPNode {
     
     @Override
     public String toString() {
-        // build the string of the children indented
         String childrenString = "";
         for(FPNode child: this.children) {
             childrenString += child.toString().replaceAll("(?m)^", "  ");
         }
 
-        // return the string of this node and its children
         return this.value + " (" + this.count + ")\n" + childrenString;
-        //return this.value + " (" + this.count + ")";
     }
 }

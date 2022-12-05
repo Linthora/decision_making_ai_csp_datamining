@@ -36,7 +36,6 @@ public abstract class AbstractAssociationRuleMiner implements AssociationRuleMin
         }
 
         throw new IllegalArgumentException("The given itemset isn't know");
-        //return null;
     }
 
     /**
@@ -47,7 +46,6 @@ public abstract class AbstractAssociationRuleMiner implements AssociationRuleMin
      * @return the confidence of the given rule, or 0 if the given premisse and/or conclusion wasn't found.
      */
     public static float confidence(Set<BooleanVariable> premisse, Set<BooleanVariable> conclusion, Set<Itemset> itemSets) {
-    // need to get the confidence of what we got
         float freqPremisse = -1;
         float freqConclusionWithPremisse = -1;
         Set<BooleanVariable> unionPremisseConclusion = new HashSet<>(premisse);
@@ -66,7 +64,6 @@ public abstract class AbstractAssociationRuleMiner implements AssociationRuleMin
             return freqConclusionWithPremisse / freqPremisse;
         }
 
-        //throw new IllegalArgumentException("Given premisse and/or conclusion we're not found in itemsets.");
         return (float) 0;
     }
     

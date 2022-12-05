@@ -71,4 +71,19 @@ public class AssociationRule {
         return "AssociationRule: [premise=" + premise + ", conclusion=" + conclusion + ", frequency=" + frequency + ", confidence=" + confiance + "]";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if(this == o)
+            return true;
+        if(o == null || !(o instanceof AssociationRule)) 
+            return false;
+        AssociationRule that = (AssociationRule) o;
+        // the frequency and the confidence should be the same assuming that the premise and the conclusion are the same and that we are using the same dataset.
+        return this.premise.equals(that.premise) && this.conclusion.equals(that.conclusion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(premise, conclusion);
+    }
 }

@@ -69,8 +69,6 @@ public class FPGrowth extends AbstractItemsetMiner {
 
         itemsets.addAll(order);
         
-        //System.out.println(tree);
-        //System.out.println("min_sup: " + min_sup);
         return itemsets;
     }
 }

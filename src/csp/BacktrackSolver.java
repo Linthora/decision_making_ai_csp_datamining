@@ -29,18 +29,21 @@ public class BacktrackSolver extends AbstractSolver {
      * @param v a list of the remaining variables that we need to asign a value with.
      * @return the extending the partial solution if consistent, null otherwise.
      */
-    private Map<Variable,Object> bt(Map<Variable,Object> i, LinkedList<Variable> v) {
+    private Map<Variable,Object> bt(Map<Variable,Object> i, Set<Variable> v) {
         if(v.isEmpty()) {
             return i;
         }
-        Variable x = v.poll();
+        Variable x = v.iterator().next();
         for(Object o: x.getDomain()) {
             Map<Variable, Object> n = new HashMap<>(i);
             n.put(x,o);
             if(isConsistent(n)) {
-                Map<Variable, Object> r = bt(n,new LinkedList<>(v));
-                if(r!=null)
+                Set<Variable> nv = new HashSet<>(v);
+                nv.remove(x);
+                Map<Variable, Object> r = bt(n, nv);
+                if(r != null) {
                     return r;
+                }
             }
         }
         v.add(x);
@@ -49,7 +52,7 @@ public class BacktrackSolver extends AbstractSolver {
 
     @Override
     public Map<Variable, Object> solve() {
-        return bt(new HashMap<>(), new LinkedList<>(this.variables));
+        return bt(new HashMap<>(), this.variables);
     }
 
     @Override

@@ -45,8 +45,7 @@ public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner
             }
             lastHeight = newHeight;
         }
-        //res.addAll(lastHeight); don't need cause we don't want the set of items itself.
-        res.remove(items); // safety for low 
+        res.remove(items);
         return res;
     }
 
@@ -54,7 +53,6 @@ public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner
     public Set<AssociationRule> extract(float minFreq, float minConfidence) {
 
         ItemsetMiner setMiner = new Apriori(this.database);
-        //ItemsetMiner setMiner = new FPGrowth(this.database);
         
         Set<Itemset> frequentItemset = setMiner.extract(minFreq);
 

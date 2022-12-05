@@ -2,8 +2,6 @@ Pour rendu fil rouge:
   - test unitaires pour tout
   - héritage pour opti tout les planner: DONE
   - Améliorer relation entre AStar et BeamSearch
-  - Ajouter HeuristicVector et HVectorEvalutation
-  - ajouter les autres planner 
   - faire des évaluations avec graphes et tout 
 
 
@@ -15,7 +13,16 @@ todo:
     - Tests unitaires for World
     - Tests unitaires for WorldWithConstraint
     - Tests unitaires for RegularWorldWithConstraint
+    - Virer le code commenté des sources : DONE
+    - HashCode && equals AssociationRule : DONE
+    - Set variable non instancié Backtrack : DONE, meh
 
+    - CSP avec vue et BENCHMARK : 
+      Run all one by one and time them
+      afficher all
 
-ONGOING:
+    - Planner tests + comparaisons
+    
+    - datamining ex9 :
+    - datamining ex10 :
     
