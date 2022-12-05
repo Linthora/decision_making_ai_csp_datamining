@@ -21,8 +21,13 @@ public class BlockworldGlobalActionGetter extends GlobalActionGetter{
         Set<String> fixedSet = this.world.getActionsByPreconditionBlock().keySet();
         Map<String, Set<Action>> actionsByPreconditionBlock = this.world.getActionsByPreconditionBlock();
 
+        for(Action action : this.actions) {
+            if(action.isApplicable(state)) {
+                actions.add(action);
+            }
+        }
         for(Variable var : state.keySet()) {
-            if(fixedSet.contains(var.getName()) &&  (Boolean) state.get(var)) {
+            if(var.getName().startsWith("fixed") && ((Boolean) state.get(var)).equals(false)) {
                 for(Action action : actionsByPreconditionBlock.get(var.getName())) {
                     if(action.isApplicable(state)) {
                         actions.add(action);

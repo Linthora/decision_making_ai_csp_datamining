@@ -52,4 +52,9 @@ public class BasicAction implements Action {
     public int getCost() {
         return this.cost;
     }
+
+    @Override
+    public String toString() {
+        return "BasicAction{" + "precondition=" + precondition + ", effect=" + effect + ", cost=" + cost + '}';
+    }
 }

@@ -60,6 +60,7 @@ public class BeamSearchPlanner extends AStarPlanner {
 
     @Override
     public List<Action> plan() {
+        this.exploredNodes = 0;
         Map<Map<Variable, Object>, Action> plan = new HashMap<>();
 
         Map<Map<Variable, Object>, Map<Variable, Object>> father = new HashMap<>();

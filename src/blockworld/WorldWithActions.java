@@ -7,7 +7,7 @@ import planning.BasicAction;
 
 import representation.Variable;
 
-public class WorldWithActions extends World {
+public class WorldWithActions extends WorldWithConstraint {
 
     protected Set<Action> actions;
     protected Map<String, Set<Action>> actionsByPreconditionBlock;

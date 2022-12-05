@@ -145,7 +145,7 @@ public class CSPDemoBlockworld {
         try{
             Thread.sleep(15000);
         } catch (InterruptedException e) {
-            ;
+            e.printStackTrace();
         }
     }
 
@@ -167,6 +167,25 @@ public class CSPDemoBlockworld {
             }
         }
         return builder.getState();
+    }
 
+    public static Map<Variable, Object> generateOne(WorldWithConstraint world) {
+        Solver macH1 = new HeuristicMACSolver(world.getVariables(), world.getConstraints(), new DomainSizeVariableHeuristic(true), new RandomValueHeuristic(new Random()));
+        
+        Map<Variable, Object> state = macH1.solve();
+
+        // because our constraint don't cover common use of free piles and fixed blocks, we need to add them manually.
+        for(Integer i: world.getPiles().keySet()) {
+            if(!state.containsValue((Object)i)) {
+                state.put(world.getPiles().get(i), true);
+            }
+        }
+        for(Integer i: world.getBlocksOn().keySet()) {
+            if(!state.containsValue((Object)i)) {
+                state.put(world.getBlocksFixed().get(i), false);
+            }
+        }
+
+        return state;
     }
 }
