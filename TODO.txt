@@ -2,27 +2,29 @@ Pour rendu fil rouge:
   - test unitaires pour tout
   - héritage pour opti tout les planner: DONE
   - Améliorer relation entre AStar et BeamSearch
-  - Ajouter HeuristicVector et HVectorEvalutation
-  - ajouter les autres planner 
   - faire des évaluations avec graphes et tout 
 
-CSP : 
-	-tests supplémentaires pour MACSolverHeuristic ?
-	-tests supp en général ?
 
-DATAMINING: 
-	-algo en plus : Done (FPGrowth)
 
-TODO:
-  DOC CSP: DONE
-  DOC datamining: remains-> [	AssociationRule.java; DONE
-				AssociationRuleMiner.java; DONE
-				AbstractAssociationRuleMiner.java; DONE
-				BruteForceAssociationRuleMiner.java; DONE
-				Test.java (to move to Test pacakge or remove); DONE
-			    ]
-  Make Readme.txt for rendu (tuto and analyse for benchmark)
-  Make rendus 
-  rendre.
-  
-  BONUS: Make benchmark for CSP ? Chaud un peu..?
+BENCHMARK AND EVALUATION PLANNER !!!!!!!!!!!!!!!!!!!!!!
+
+
+todo:
+    - Tests unitaires for World
+    - Tests unitaires for WorldWithConstraint
+    - Tests unitaires for RegularWorldWithConstraint
+    - Virer le code commenté des sources : DONE
+    - HashCode && equals AssociationRule : DONE
+    - Set variable non instancié Backtrack : DONE, meh
+
+    - CSP avec vue et BENCHMARK : DONE
+
+    
+    - datamining ex9 : DONE and tested
+    - datamining ex10 : DONE and somewhat explained
+    
+    - tests for WorldWithBooleanVariable : DONE
+    - ArcConsistency voir scope null : DONE
+
+    - Planner tests + comparaisons
+    - clean BenchmarkItemsetMiner : 
