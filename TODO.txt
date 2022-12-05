@@ -23,6 +23,10 @@ todo:
 
     - Planner tests + comparaisons
     
-    - datamining ex9 :
+    - datamining ex9 : DONE and tested
     - datamining ex10 :
     
+    - tests for WorldWithBooleanVariable : DONE
+    - clean BenchmarkItemsetMiner : 
+
+    - ArcConsistency voir scope null

@@ -20,6 +20,6 @@ public class BooleanVariable extends Variable {
 
     @Override
     public String toString() {
-        return "BooleanVariable: [name: " + this.name + ", domain: " + this.domain + "]";
+        return "BooleanVariable: [name: " + this.name + "]";
     }
 }

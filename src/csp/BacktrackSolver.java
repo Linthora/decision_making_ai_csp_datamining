@@ -26,33 +26,31 @@ public class BacktrackSolver extends AbstractSolver {
      * Worst case complexity: O(|domain of variable|^|variables|) 
      * 
      * @param i partial instantiation representing our built solution until now.
-     * @param v a list of the remaining variables that we need to asign a value with.
+     * @param v a list of the remaining variables that we need to asign a value with. We use a LinkedList as specified in the course.
      * @return the extending the partial solution if consistent, null otherwise.
      */
-    private Map<Variable,Object> bt(Map<Variable,Object> i, Set<Variable> v) {
+    private Map<Variable,Object> bt(Map<Variable,Object> i, LinkedList<Variable> v) { // The use of LinkedList is justified by the way we use it here and confirmed by the course.
         if(v.isEmpty()) {
             return i;
         }
-        Variable x = v.iterator().next();
+        Variable x = v.poll();
         for(Object o: x.getDomain()) {
             Map<Variable, Object> n = new HashMap<>(i);
             n.put(x,o);
             if(isConsistent(n)) {
-                Set<Variable> nv = new HashSet<>(v);
-                nv.remove(x);
-                Map<Variable, Object> r = bt(n, nv);
+                Map<Variable, Object> r = bt(n, v);
                 if(r != null) {
                     return r;
                 }
             }
         }
-        v.add(x);
+        v.addFirst(x);
         return null;
     }
 
     @Override
     public Map<Variable, Object> solve() {
-        return bt(new HashMap<>(), this.variables);
+        return bt(new HashMap<>(), new LinkedList<>(this.variables));
     }
 
     @Override

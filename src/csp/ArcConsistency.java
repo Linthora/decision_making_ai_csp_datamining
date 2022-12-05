@@ -20,7 +20,7 @@ public class ArcConsistency {
      */
     public ArcConsistency(Set<Constraint> constraints) {
         for(Constraint cons : constraints)
-            if(cons.getScope().size() > 2)
+            if(cons.getScope().size() > 2 && cons.getScope().size() < 1)
                 throw new IllegalArgumentException("Given constraint is neither binary or unary.");
         this.constraints = constraints;
     }

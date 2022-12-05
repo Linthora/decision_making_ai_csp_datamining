@@ -10,11 +10,27 @@ import representation.*;
 public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner {
 
     /**
+     * A boolean saying if we should use FPGrowth in the extract method or stay with Apriori.
+     */
+    protected boolean useFPGrowth;
+
+    /**
      * Creates a new BruteForceAssociationRuleMiner with given database.
      * @param database the database to use herited from {@link datamining.AbstractItemsetMiner}.
      */
     public BruteForceAssociationRuleMiner(BooleanDatabase database) {
         super(database);
+        this.useFPGrowth = false;
+    }
+
+    /**
+     * Creates a new BruteForceAssociationRuleMiner with given database and a boolean saying if we should use FPGrowth in the extract method or stay with Apriori.
+     * @param database the database to use herited from {@link datamining.AbstractItemsetMiner}.
+     * @param fpgrowth a boolean saying if we should use FPGrowth in the extract method or stay with Apriori.
+     */
+    public BruteForceAssociationRuleMiner(BooleanDatabase database, boolean fpgrowth) {
+        super(database);
+        this.useFPGrowth = fpgrowth;
     }
     
     /**
@@ -53,6 +69,9 @@ public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner
     public Set<AssociationRule> extract(float minFreq, float minConfidence) {
 
         ItemsetMiner setMiner = new Apriori(this.database);
+        if(this.useFPGrowth) {
+            setMiner = new FPGrowth(this.database);
+        }
         
         Set<Itemset> frequentItemset = setMiner.extract(minFreq);
 

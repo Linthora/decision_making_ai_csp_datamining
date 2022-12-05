@@ -26,13 +26,11 @@ public class BenchmarkItemsetMiner {
      * @return a random boolean database
      */
     public static BooleanDatabase generateRandomDatabase(int nbVariables, int nbTransactions, int nbItemsPerTransaction) {
-        // create the variables
         ArrayList<BooleanVariable> variables = new ArrayList<>(nbVariables);
 
         for (int i = 0; i < nbVariables; i++) {
             variables.add(new BooleanVariable("var" + i));
         }
-        // create the database
         BooleanDatabase database = new BooleanDatabase(new HashSet<>(variables));
         // create the transactions
         Random random = new Random();
@@ -56,7 +54,6 @@ public class BenchmarkItemsetMiner {
      * @return a Map containing the evolution of the running time for each algorithm based on the number of variables. True for Apriori, False for FPGrowth.
      */
     public static Map<Boolean, List<Long>> benchmarkNbVariable(Integer nbIterations, Float frequency) {
-        //System.out.println("\nBenchmarking for different number of variables");
         if(nbIterations == null) {
             nbIterations = 10;
         }
@@ -68,8 +65,6 @@ public class BenchmarkItemsetMiner {
         
 
         for(int i=0; i < nbIterations; ++i) {
-            //System.out.print("Iteration " + i + ":  ");
-
             BooleanDatabase database = generateRandomDatabase(2*i, 10, 2*i);
             ItemsetMiner apriori = new Apriori(database);
             ItemsetMiner fpgrowth = new FPGrowth(database);
@@ -87,8 +82,6 @@ public class BenchmarkItemsetMiner {
             fpgrowth.extract(frequency);
             t2 = System.currentTimeMillis();
             fpgrowthTimes.add(t2 - t1);
-
-            //System.out.println("Apriori: " + aprioriTimes.get(i) + "ms, FPGrowth: " + fpgrowthTimes.get(i) + "ms");
         }
 
         Map<Boolean, List<Long>> res = new HashMap<>();
@@ -105,7 +98,6 @@ public class BenchmarkItemsetMiner {
      * @return a Map containing the evolution of the running time for each algorithm based on the number of variables. True for Apriori, False for FPGrowth.
      */
     public static Map<Boolean, List<Long>> benchmarkNbTransaction(Integer nbIterations, Float frequency) {
-        //System.out.println("\nBenchmarking for different number of transactions");
         if(nbIterations == null) {
             nbIterations = 10;
         }
@@ -116,8 +108,6 @@ public class BenchmarkItemsetMiner {
         List<Long> fpgrowthTimes = new LinkedList<>();
 
         for(int i=0; i < nbIterations; ++i) {
-            //System.out.print("Iteration " + i + ":  ");
-
             BooleanDatabase database = generateRandomDatabase(10, 2*i, 10);
             ItemsetMiner apriori = new Apriori(database);
             ItemsetMiner fpgrowth = new FPGrowth(database);
@@ -135,8 +125,6 @@ public class BenchmarkItemsetMiner {
             fpgrowth.extract(frequency);
             t2 = System.currentTimeMillis();
             fpgrowthTimes.add(t2 - t1);
-
-            //System.out.println("Apriori: " + aprioriTimes.get(i) + "ms, FPGrowth: " + fpgrowthTimes.get(i) + "ms");
         }
 
         Map<Boolean, List<Long>> res = new HashMap<>();
@@ -146,47 +134,6 @@ public class BenchmarkItemsetMiner {
         return res;
     }
 
-    // useless, same as benchmarkNbVariable
-    /* public static Map<Boolean, List<Long>> benchmarkNbItemsPerTransaction(Integer nbIterations, Float frequency) {
-        //System.out.println("\nBenchmarking for different number of items per transaction");
-        if(nbIterations == null) {
-            nbIterations = 10;
-        }
-        if(frequency == null) {
-            frequency = 0.5f;
-        }
-        List<Long> aprioriTimes = new LinkedList<>();
-        List<Long> fpgrowthTimes = new LinkedList<>();
-
-        for(int i=0; i < nbIterations; ++i) {
-            //System.out.print("Iteration " + i + ":  ");
-
-            BooleanDatabase database = generateRandomDatabase(2*i, 10, 2*i);
-            ItemsetMiner apriori = new Apriori(database);
-            ItemsetMiner fpgrowth = new FPGrowth(database);
-            long t1;
-            long t2;
-            
-            t1 = System.currentTimeMillis();
-            apriori.extract(frequency);
-            t2 = System.currentTimeMillis();
-            aprioriTimes.add(t2 - t1);
-            
-            t1 = System.currentTimeMillis();
-            fpgrowth.extract(frequency);
-            t2 = System.currentTimeMillis();
-            fpgrowthTimes.add(t2 - t1);
-
-            //System.out.println("Apriori: " + aprioriTimes.get(i) + "ms, FPGrowth: " + fpgrowthTimes.get(i) + "ms");
-        } 
-
-        Map<Boolean, List<Long>> res = new HashMap<>();
-        res.put(true, aprioriTimes);
-        res.put(false, fpgrowthTimes);
-        
-        return res;
-    } */
-
     /**
      * Running benchmarks for Apriori and FPGrowth based on growing number of variables and transactions.
      * @param nbIterations number of iterations for each number of variables
@@ -194,7 +141,6 @@ public class BenchmarkItemsetMiner {
      * @return a Map containing the evolution of the running time for each algorithm based on the number of variables. True for Apriori, False for FPGrowth.
      */
     public static Map<Boolean, List<Long>> benchmarkAll(Integer nbIterations, Float frequency) {
-        //System.out.println("\nBenchmarking with all factors");
         if(nbIterations == null) {
             nbIterations = 10;
         }
@@ -205,8 +151,6 @@ public class BenchmarkItemsetMiner {
         List<Long> fpgrowthTimes = new LinkedList<>();
 
         for(int i=0; i < nbIterations; ++i) {
-            //System.out.print("Iteration " + i + ":  ");
-
             BooleanDatabase database = generateRandomDatabase(2*i, 2*i, 2*i);
             ItemsetMiner apriori = new Apriori(database);
             ItemsetMiner fpgrowth = new FPGrowth(database);
@@ -224,8 +168,6 @@ public class BenchmarkItemsetMiner {
             fpgrowth.extract(frequency);
             t2 = System.currentTimeMillis();
             fpgrowthTimes.add(t2 - t1);
-
-            //System.out.println("Apriori: " + aprioriTimes.get(i) + "ms, FPGrowth: " + fpgrowthTimes.get(i) + "ms");
         }
 
         Map<Boolean, List<Long>> res = new HashMap<>();
@@ -289,14 +231,6 @@ public class BenchmarkItemsetMiner {
         res = benchmarkNbTransaction(1000, 0.9f);
         toCSV(res.get(true), res.get(false), "benchmarkNbTransaction_0-9freq.csv");
 
-        //res = benchmarkNbItemsPerTransaction(8, 0.1f);
-        //toCSV(res.get(true), res.get(false), "benchmarkNbItemsPerTransaction_0-1freq.csv");
-
-        //res = benchmarkNbItemsPerTransaction(20, 0.5f);
-        //toCSV(res.get(true), res.get(false), "benchmarkNbItemsPerTransaction_0-5freq.csv");
-
-        //res = benchmarkNbItemsPerTransaction(20, 0.9f);
-        //toCSV(res.get(true), res.get(false), "benchmarkNbItemsPerTransaction_0-9freq.csv");
 
         System.out.println("(6/9)");
         res = benchmarkAll(10, 0.1f);

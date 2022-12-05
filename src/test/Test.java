@@ -40,7 +40,8 @@ import dataminingtests.AprioriTests;
 import dataminingtests.BruteForceAssociationRuleMinerTests;
 import dataminingtests.ItemsetMinerTests;
 
-
+//Fil rouge imports
+import blockworld.*;
 
 /**
  * Executable class to run tests for classes.
@@ -152,22 +153,10 @@ public class Test {
         System.out.println(ok ? "FPGrowth working!!!" : "At least one test failed for our FPGrowth implementatio.. :'-( (or earlier)");
 
 
-        
-        /* System.out.println("\n\nhand made benchmark between Apriori and FPGrowth on the same set of tests (repeted 5 times): ");
+        System.out.println("\n\nEntering tests for our blockworld implementation");
 
-        long t0 = System.currentTimeMillis();
-        for(int i=0; i < 10; ++i) {
-            ok = ok && new ItemsetMinerTests(database -> new Apriori(database)).testExtract();
-        }
-        long t1 = System.currentTimeMillis();
-        for(int i=0; i < 10; ++i) {
-            ok = ok && new ItemsetMinerTests(database -> new FPGrowth(database)).testExtract();
-        }
-        long t2 = System.currentTimeMillis();
-        System.out.println("\ntime taken by Apriori: " + (t1-t0));
-        System.out.println("time taken by FPGrowth: " + (t2-t1)); */
+        ok = ok && WorldWithBooleanVariableTest.testAll();
 
-        //System.out.println(ok ? "All test passed my boiiii" : "No good SOUUUUUUP (translation: at least one test failed...KO)");
-        
+        System.out.println(ok ? "All test passed !!!!!! yaaay :-)" : "At least one test failed...KO :'-(");
     }
 }
