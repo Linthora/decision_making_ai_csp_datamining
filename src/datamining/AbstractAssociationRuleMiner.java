@@ -67,7 +67,6 @@ public abstract class AbstractAssociationRuleMiner implements AssociationRuleMin
         return (float) 0;
     }
     
-
     @Override
     public BooleanDatabase getDatabase() {
         return this.database;

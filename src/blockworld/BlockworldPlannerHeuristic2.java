@@ -10,7 +10,7 @@ import representation.Variable;
 import utility.CustomCell;
 
 /**
- * Represents an heuristic for the blockworld problem.
+ * Represents an heuristic for the blockworld problem. Implements {@link planning.Heuristic}.
  * 
  * Counting the number of missplaced OnBlocks Variable and counting all the OnBlock variable on top of a missplaced block as well.
  * 
@@ -46,9 +46,21 @@ import utility.CustomCell;
  */
 public class BlockworldPlannerHeuristic2 implements Heuristic {
 
+    /**
+     * The goal to reach.
+     */
     protected BasicGoal goal;
+
+    /**
+     * The world used by the planner.
+     */
     protected World world;
 
+    /**
+     * Creates a new BlockworldPlannerHeuristic2.
+     * @param goal The goal to reach.
+     * @param world The world used by the planner.
+     */
     public BlockworldPlannerHeuristic2(BasicGoal goal, World world) {
         this.goal = goal;
         this.world = world;

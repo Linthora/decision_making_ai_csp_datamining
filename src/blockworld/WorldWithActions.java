@@ -7,11 +7,28 @@ import planning.BasicAction;
 
 import representation.Variable;
 
+/**
+ * Represents a world with constraint for the blockworld problem and build the actions possible in this world.
+ * Extends {@link blockworld.WorldWithConstraint}.
+ */
 public class WorldWithActions extends WorldWithConstraint {
 
+    /**
+     * The actions possible in this world.
+     */
     protected Set<Action> actions;
+
+    /**
+     * The actions possible in this world, grouped by the precondition fixed they require.
+     * This is used to get the actions applicable in a state in a more efficient way.
+     */
     protected Map<String, Set<Action>> actionsByPreconditionBlock;
 
+    /**
+     * Creates a new WorldWithActions.
+     * @param nbBlocks The number of blocks.
+     * @param nbPiles The number of piles.
+     */
     public WorldWithActions(int nbBlocks, int nbPiles) {
         super(nbBlocks, nbPiles);
         this.actions = new HashSet<>();
@@ -59,10 +76,18 @@ public class WorldWithActions extends WorldWithConstraint {
         }
     }
 
+    /**
+     * Returns all the actions possible in this world.
+     * @return All the actions possible in this world.
+     */
     public Set<Action> getActions() {
         return this.actions;
     }
 
+    /**
+     * Returns all the actions possible in this world, grouped by the precondition fixed they require.
+     * @return All the actions possible in this world, grouped by the precondition fixed they require.
+     */
     public Map<String, Set<Action>> getActionsByPreconditionBlock() {
         return this.actionsByPreconditionBlock;
     }

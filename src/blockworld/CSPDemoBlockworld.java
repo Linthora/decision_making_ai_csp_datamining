@@ -169,6 +169,11 @@ public class CSPDemoBlockworld {
         return builder.getState();
     }
 
+    /**
+     * Generate a random state for the given world.
+     * @param world the world.
+     * @return the generated state.
+     */
     public static Map<Variable, Object> generateOne(WorldWithConstraint world) {
         Solver macH1 = new HeuristicMACSolver(world.getVariables(), world.getConstraints(), new DomainSizeVariableHeuristic(true), new RandomValueHeuristic(new Random()));
         

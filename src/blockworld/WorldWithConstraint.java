@@ -3,14 +3,30 @@ package blockworld;
 import java.util.*;
 import representation.*;
 
+/**
+ * A class representing a world based on the blockworld with the basic constraints that it is defined by.
+ * Extends {@link blockworld.World}.
+ */
 public class WorldWithConstraint extends World {
+
+    /**
+     * All differents constraints between blocks.
+     */
     protected Set<Constraint> diffConstraints;
+
+    /**
+     * All implication constraints defining the rules of the world.
+     */
     protected Set<Constraint> implicatioConstraints;
 
+    /**
+     * Creates a new WorldWithConstraint.
+     * @param nbBlocs The number of blocks.
+     * @param nbPiles The number of piles.
+     */
     public WorldWithConstraint(int nbBlocs, int nbPiles) {
         super(nbBlocs, nbPiles);
 
-        // Settings Constraints
         this.diffConstraints = new HashSet<>();
         this.implicatioConstraints = new HashSet<>();
 
@@ -37,51 +53,42 @@ public class WorldWithConstraint extends World {
                     s2.add(true); // fixed 
                     v2 = this.blocksFixed.get(i);
                 }
-                // will need testing
                 this.implicatioConstraints.add(new Implication(on, s1, v2, s2));
             }
         }
-
-        // constraints for free piles (true)
-        /*for(Integer p: this.piles.keySet()) {
-            for(Variable on: this.blocksOn.values()) {
-                Set<Object> s1 = Set.of(true);
-
-                Set<Object> s2 = new HashSet<>(on.getDomain());
-                s2.remove(p);
-
-                this.implicatioConstraints.add(new Implication(this.piles.get(p), s1, on, s2));
-            }
-        }
-        System.out.println("WorldWithConstraint created with free (true) constraints");
-
-        // constraints for fixed blocks (false)
-        for(Integer b: this.blocksFixed.keySet()) {
-            for(Variable on: this.blocksOn.values()) {
-                Set<Object> s1 = Set.of(false);
-
-                Set<Object> s2 = new HashSet<>(on.getDomain());
-                s2.remove(b);
-
-                this.implicatioConstraints.add(new Implication(this.blocksFixed.get(b), s1, on, s2));
-            }
-        }*/
     }
 
+    /**
+     * Returns all constraints of this world.
+     * @return All constraints of this world.
+     */
     public Set<Constraint> getConstraints() {
         Set<Constraint> res = new HashSet<>(this.diffConstraints);
         res.addAll(this.implicatioConstraints);
         return res;
     }
 
+    /**
+     * Returns the differents constraints.
+     * @return The differents constraints.
+     */
     public Set<Constraint> getDiffConstraints() {
         return this.diffConstraints;
     }
 
+    /**
+     * Returns the implication constraints.
+     * @return The implication constraints.
+     */
     public Set<Constraint> getImplicatioConstraints() {
         return this.implicatioConstraints;
     }
 
+    /**
+     * Tell if the given state is consistent with the constraints of this world.
+     * @param state The state to test.
+     * @return True if the given state is consistent with the constraints of this world, false otherwise.
+     */
     public boolean isConsistent(Map<Variable, Object> state) {
         for(Constraint c: this.getConstraints()) {
             if(!c.isSatisfiedBy(state)) {
@@ -91,6 +98,12 @@ public class WorldWithConstraint extends World {
         return true;
     }
 
+    /**
+     * Tell if the given state satisfies all the given constraints.
+     * @param state The state to test.
+     * @param constraints The constraints to test.
+     * @return True if the given state satisfies all the given constraints, false otherwise.
+     */
     public static boolean satisfiesAll(Map<Variable, Object> state, Set<Constraint> constraints) {
         for(Constraint c: constraints) {
             if(!c.isSatisfiedBy(state)) {

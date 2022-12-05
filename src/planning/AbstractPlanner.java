@@ -42,12 +42,7 @@ public abstract class AbstractPlanner implements Planner {
         return this.initialState;
     }
 
-    //@Override
-    //public Set<Action> getActions() {
-    //    return actions.getAll();
-    //}
-
-    // @Override
+    @Override
     public ActionGetter getActionGetter() {
         return this.actions;
     }

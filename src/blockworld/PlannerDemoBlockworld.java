@@ -13,8 +13,15 @@ import representation.*;
 
 import csp.*;
 
+/**
+ * This class is a demo and a way of comparing the different planners implemented in the planning package.
+ */
 public class PlannerDemoBlockworld {
 
+    /**
+     * The main method of the demo/comparison.
+     * @param args not used.
+     */
     public static void main(String[] args) {
         System.out.println("Entering Planner Demo Blockworld");
 
@@ -37,7 +44,7 @@ public class PlannerDemoBlockworld {
 
         // generating a "random" world with a number of blocks and piles using method given by CSPDemoBlockworld (it correct the generation to follow the intuitive definition of free and fixed)
         int nbBlocs = 5; // BE CAREFUL : if you change this value you may explode the recursion limit of the JVM thanks to BFS. You can comment it if you want to try.
-        int nbPiles = 4; // I recomment commenting dfs and dijkstra if you want to go even higher (because of the times it would take.).
+        int nbPiles = 3; // I recomment commenting dfs and dijkstra if you want to go even higher (because of the times it would take.).
         
         WorldWithActions workingworld = new WorldWithActions(nbBlocs, nbPiles);
 
@@ -182,9 +189,18 @@ public class PlannerDemoBlockworld {
             System.out.println("The shortest plan was found by the " + shortest);
             visualisation(shortestPlan, initalState, workingworld, shortest);
         }
+
+        System.out.println("To conclude on those results: See Readme.txt");
         
     }
 
+    /**
+     * Method to run the visuation of a given plan.
+     * @param plan the plan to visualise.
+     * @param initialState the initial state of the problem.
+     * @param world the working world of the problem.
+     * @param algoName the name of the algorithm used to find the plan.
+     */
     public static void visualisation(List<Action> plan, Map<Variable, Object> initialState, World world, String algoName) {
         BWState<Integer> bwstate = CSPDemoBlockworld.convertState(initialState, world.getNbBlocs(), world.getNbPiles());
         BWIntegerGUI gui = new BWIntegerGUI(world.getNbBlocs());
@@ -192,7 +208,7 @@ public class PlannerDemoBlockworld {
         JFrame frame = new JFrame("Visualisation: " + algoName);
         frame.add(component);
         frame.pack();
-        frame.setSize(300,300);
+        frame.setSize(400,400);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         for(Action action : plan) {

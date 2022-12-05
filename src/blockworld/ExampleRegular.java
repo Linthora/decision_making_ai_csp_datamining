@@ -3,7 +3,16 @@ package blockworld;
 import representation.*;
 import java.util.*;
 
+/**
+ * This class is used to test the RegularWorldWithConstraint class.
+ * Is serve as a demo as well.
+ */
 public class ExampleRegular {
+
+    /**
+     * The main method.
+     * @param args not used.
+     */
     public static void main(String[] args) {
         System.out.println("Hello (Block) World!\n");
         
@@ -56,6 +65,11 @@ public class ExampleRegular {
 
     }
 
+    /**
+     * This method is used to print the result of a test.
+     * @param t the list of object containing the world, the state and if it is supposed to be regular or not.
+     * @param i the number of the test.
+     */
     public static void runTestPrint(List<Object> t, String i) {
         RegularWorldWithConstraint hello = (RegularWorldWithConstraint) t.get(0);
         @SuppressWarnings("unchecked")
@@ -331,12 +345,4 @@ public class ExampleRegular {
 
         return t8;
     }
-    
-
-
-
-
-    //u got that
-
-    
 }

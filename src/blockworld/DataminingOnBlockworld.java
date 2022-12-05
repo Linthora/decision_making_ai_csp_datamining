@@ -8,8 +8,15 @@ import bwgeneratordemo.Demo;
 
 import datamining.*;
 
+/**
+ * A demo of datamining on the blockworld problem.
+ */
 public class DataminingOnBlockworld {
     
+    /**
+     * The main method.
+     * @param args used to tell if you rather use apriori for the mining (to do this just add 'apriori' as first argument).
+     */
     public static void main(String[] args) {
 
         System.out.println("Blockworld datamining demo: BEGIN");

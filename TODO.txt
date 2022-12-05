@@ -19,12 +19,12 @@ todo:
 
     - CSP avec vue et BENCHMARK : DONE
 
-    - Planner tests + comparaisons
     
     - datamining ex9 : DONE and tested
     - datamining ex10 : DONE and somewhat explained
     
     - tests for WorldWithBooleanVariable : DONE
-    - clean BenchmarkItemsetMiner : 
-
     - ArcConsistency voir scope null : DONE
+
+    - Planner tests + comparaisons
+    - clean BenchmarkItemsetMiner : 
