@@ -80,22 +80,4 @@ public class WorldWithBooleanVariable extends World {
         }
         return res;
     }
-
-    public static void main(String[] args) {
-        Random r = new Random();
-        List<List<Integer>> worlds = Demo.getState(r);
-        
-        for(List<Integer> pile: worlds) {
-            System.out.println(pile);
-        }
-
-        System.out.println("Nb blocs demo: " + Demo.NB_BLOCKS);
-        System.out.println("Nb piles demo: " + Demo.NB_STACKS);
-
-        Set<BooleanVariable> res = getCorrespondingState(worlds, Demo.NB_BLOCKS, Demo.NB_STACKS);
-
-        for(BooleanVariable b: res) {
-            System.out.println(b);
-        }
-    }
 }
