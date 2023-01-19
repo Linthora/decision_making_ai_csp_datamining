@@ -1,4 +1,4 @@
-# IA and decision aid basics
+# decision-making AI, CSP and some datamining
 
 This project was initiated for our course on artificial and decision aid to teach us the basics of this field of study. 
 
